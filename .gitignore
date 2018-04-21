@@ -2,7 +2,13 @@
 .DS_Store
 
 # Build files
-build-BombingAdventure-Desktop_Qt_5_10_0_clang_64bit-Default/*
+build-BombingAdventure-Desktop_Qt_5_10_0_clang_64bit-Default/
 
-# Others
+# build-debug
+cmake-build-debug/
+
+# CLion modified files
+.idea/
+
+# Qt modified files
 CMakeLists.txt.user
