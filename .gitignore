@@ -1,1 +1,8 @@
+# OS
 .DS_Store
+
+# Build files
+build-BombingAdventure-Desktop_Qt_5_10_0_clang_64bit-Default/*
+
+# Others
+CMakeLists.txt.user
