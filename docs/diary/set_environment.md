@@ -130,12 +130,13 @@ cocos new -l cpp --mac-bundleid MAC_BUNDLEID -d /Users/brando/Documents/GitHub/B
 
 在 IDE 中选择 `打开文件或项目` ，选择用 CMake 作为编译器，选中 `CMakeLists.txt` ，点击 `构建 (Build)` 再运行一下，检查环境是否配置正常。
 
-**注意每次 push 到 GitHub 之前先 clean 一下项目，并在 GitHub 客户端检查一下代码的增删部分，避免意料之外的编译错误** 
+**注意每次 push 到 GitHub 之前先 clean 一下项目，并在 GitHub 客户端检查一下代码的增删部分，避免意料之外的编译错误。** 
 
 ### Windows
 
 待补充，应该也是解压完之后先将 cocos 命令添加进环境变量中，其他内容应该是一样的。
 
+**注意每次 push 到 GitHub 之前先 clean 一下项目，并在 GitHub 客户端检查一下代码的增删部分，避免意料之外的编译错误。** 
 
 
 
