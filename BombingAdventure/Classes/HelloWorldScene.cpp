@@ -1,5 +1,7 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include "GameScene.h"
+#include "RulesScene.h"
 
 USING_NS_CC;
 
@@ -18,25 +20,38 @@ static void problemLoading(const char* filename)
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !Scene::init() )
-    {
-        return false;
-    }
+	//////////////////////////////
+	// 1. super init first
+	if (!Scene::init())
+	{
+		return false;
+	}
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+	/////////////////////////////
+	// 2. add a menu item with "X" image, which is clicked to quit the program
+	//    you may modify it.
 
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+	auto bg = Sprite::create("bg.png");
+	bg->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	this->addChild(bg);
+
+	auto closeItem = MenuItemImage::create(
+		"_CloseSelected.png",
+		"_CloseSelected.png",
+		CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+
+	auto startItem = MenuItemImage::create(
+		"Start.png",
+		"Start.png",
+		CC_CALLBACK_1(HelloWorld::menuStartScene, this));
+
+	auto rulesItem = MenuItemImage::create(
+		"Rules.png",
+		"Rules.png",
+		CC_CALLBACK_1(HelloWorld::menuRulesScene, this));
 
     if (closeItem == nullptr ||
         closeItem->getContentSize().width <= 0 ||
@@ -46,13 +61,20 @@ bool HelloWorld::init()
     }
     else
     {
-        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
-        float y = origin.y + closeItem->getContentSize().height/2;
+        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/10;
+        float y = origin.y + closeItem->getContentSize().height/10;
         closeItem->setPosition(Vec2(x,y));
+		closeItem->setScale(0.1);
     }
 
+	startItem->setPosition(Vec2(visibleSize.width / 2 + 24, 3 * visibleSize.height / 4));
+	startItem->setScale(0.5);
+	rulesItem->setPosition(Vec2(visibleSize.width / 2 + 15, visibleSize.height / 2));
+	rulesItem->setScale(0.5);
+
+
     // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
+    auto menu = Menu::create(closeItem, startItem, rulesItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
 
@@ -62,7 +84,7 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
 
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+    auto label = Label::createWithTTF("Bombing Adventure", "fonts/Marker Felt.ttf", 42);
     if (label == nullptr)
     {
         problemLoading("'fonts/Marker Felt.ttf'");
@@ -78,7 +100,8 @@ bool HelloWorld::init()
     }
 
     // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
+
+    auto sprite = Sprite::create("p1.png");
     if (sprite == nullptr)
     {
         problemLoading("'HelloWorld.png'");
@@ -86,8 +109,8 @@ bool HelloWorld::init()
     else
     {
         // position the sprite on the center of the screen
-        sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
+		sprite->setPosition(Vec2(visibleSize.width / 2 + 10, visibleSize.height / 5));
+		sprite->setScale(0.2);
         // add the sprite as a child to this layer
         this->addChild(sprite, 0);
     }
@@ -110,4 +133,14 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 
 
+}
+
+void HelloWorld::menuStartScene(cocos2d::Ref * pSender)
+{
+	Director::getInstance()->replaceScene(CCTransitionMoveInR::create(0.4f, GameScene::createScene()));
+}
+
+void HelloWorld::menuRulesScene(cocos2d::Ref * pSender)
+{
+	Director::getInstance()->pushScene(RulesScene::createScene());
 }
