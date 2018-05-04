@@ -4,11 +4,20 @@
 # Build files
 build-BombingAdventure-Desktop_Qt_5_10_0_clang_64bit-Default/
 
+cocos2d/
+proj.win32/
+
 # build-debug
 cmake-build-debug/
 
 # CLion modified files
 .idea/
 
+# VS
+.vs/
+
 # Qt modified files
 CMakeLists.txt.user
+
+#Binary file
+*.obj
