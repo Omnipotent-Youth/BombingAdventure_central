@@ -10,7 +10,7 @@ const int MOVE_UP = 1;
 const int MOVE_DOWN = -1;
 const int MOVE_STOP = 0;
 
-/* Following variables mark the movement status of player   */
+/* Following variables mark the status of player   */
 int x_movement = MOVE_STOP;         /* Initiate with player stops   */
 int y_movement = MOVE_STOP;         /* Initiate with player stops   */
 
@@ -42,16 +42,13 @@ bool GameScene::init() {
 	TMXObjectGroup *group = map->getObjectGroup("object1");
 	ValueMap spawnPoint = group->getObject("spawn");
 
-	float x = spawnPoint["x"].asFloat();
-	float y = spawnPoint["y"].asFloat();
-	player = Sprite::create("player1_default.png");
-	player->setAnchorPoint(Vec2(0.5, 0.5));
-	player->setPosition(Vec2(x+20, y-50));
-	addChild(player, 2, 200);
-/*
-	setTouchEnabled(TRUE);
-	setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-*/
+    /* Create the hero  */
+    float x = spawnPoint["x"].asFloat();
+    float y = spawnPoint["y"].asFloat();
+    hero = Player::create();
+    hero->setPosition(Vec2(x+20, y-50));
+    this->addChild(hero, 2, 200);
+
     /* Following are keyboard listener  */
 
     /* Callback Function: game_keyboard_listener
@@ -68,7 +65,7 @@ bool GameScene::init() {
      *                      end of movement on that direction.
      */
     auto game_keyboard_listener = EventListenerKeyboard::create();
-    game_keyboard_listener->onKeyPressed = [](EventKeyboard::KeyCode keyboard_code, Event* event) {
+    game_keyboard_listener->onKeyPressed = [&](EventKeyboard::KeyCode keyboard_code, Event* event) {
         switch (keyboard_code) {
             case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
             case EventKeyboard::KeyCode::KEY_A:
@@ -86,9 +83,14 @@ bool GameScene::init() {
             case EventKeyboard::KeyCode::KEY_S:
                 y_movement = MOVE_DOWN;
                 break;
+            case EventKeyboard::KeyCode::KEY_SPACE:
+                if (hero->can_set_bomb()) {
+                    hero->set_bomb();
+                }
+                break;
         }
     };
-    game_keyboard_listener->onKeyReleased = [](EventKeyboard::KeyCode keyboard_code, Event* event) {
+    game_keyboard_listener->onKeyReleased = [&](EventKeyboard::KeyCode keyboard_code, Event* event) {
         switch (keyboard_code) {
             case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
             case EventKeyboard::KeyCode::KEY_A:
@@ -110,7 +112,7 @@ bool GameScene::init() {
     };
 
     /* Register keyboard event listener */
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(game_keyboard_listener, player);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(game_keyboard_listener, hero);
 
     /* Enable update function of the GameScene, which controls the refreshments */
     this->scheduleUpdate();
@@ -120,15 +122,16 @@ bool GameScene::init() {
 void GameScene::update(float delta) {
 
     /* Following part updates the movement of player    */
-    float position_x = player->getPositionX();
-    float position_y = player->getPositionY();
+    float position_x = hero->getPositionX();
+    float position_y = hero->getPositionY();
 
-    float moving_speed = 10.f;
+    float moving_speed = hero->get_moving_speed();
 
     position_x += x_movement * moving_speed;
     position_y += y_movement * moving_speed;
 
-    player->setPosition(position_x, position_y);
+    hero->setPosition(position_x, position_y);
+
 }
 
 /*
