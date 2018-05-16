@@ -99,7 +99,7 @@ elseif(WINDOWS)
             proj.win32/main.h
             proj.win32/resource.h
             )
-    set(RES_PREFIX "")
+    set(RES_PREFIX "/Resources")
 elseif(IOS)
     set(PLATFORM_SPECIFIC_SRC
             proj.ios_mac/ios/main.m
@@ -161,6 +161,7 @@ set(GAME_SRC
         Classes/GameScene.cpp
         Classes/RulesScene.cpp
         )
+
 
 set(GAME_HEADERS
         ${PLATFORM_SPECIFIC_HEADERS}

@@ -46,7 +46,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="game.rc">
+    <ResourceCompile Include="..\Resources">
       <Filter>resource</Filter>
     </ResourceCompile>
   </ItemGroup>
