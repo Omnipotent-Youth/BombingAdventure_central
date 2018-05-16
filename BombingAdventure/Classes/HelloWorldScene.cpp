@@ -64,12 +64,14 @@ bool HelloWorld::init()
         float x = origin.x + visibleSize.width - closeItem->getContentSize().width/10;
         float y = origin.y + closeItem->getContentSize().height/10;
         closeItem->setPosition(Vec2(x,y));
-		closeItem->setScale(0.1);
+  		closeItem->setScale(0.1);
     }
 
-	startItem->setPosition(Vec2(visibleSize.width / 2 + 24, 3 * visibleSize.height / 4));
+	startItem->setAnchorPoint(Vec2(0.5, 0.5));
+	rulesItem->setAnchorPoint(Vec2(0.5, 0.5));
+	startItem->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	startItem->setScale(0.5);
-	rulesItem->setPosition(Vec2(visibleSize.width / 2 + 15, visibleSize.height / 2));
+	rulesItem->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	rulesItem->setScale(0.5);
 
 
@@ -99,21 +101,6 @@ bool HelloWorld::init()
         this->addChild(label, 1);
     }
 
-    // add "HelloWorld" splash screen"
-
-    auto sprite = Sprite::create("p1.png");
-    if (sprite == nullptr)
-    {
-        problemLoading("'HelloWorld.png'");
-    }
-    else
-    {
-        // position the sprite on the center of the screen
-		sprite->setPosition(Vec2(visibleSize.width / 2 + 10, visibleSize.height / 5));
-		sprite->setScale(0.2);
-        // add the sprite as a child to this layer
-        this->addChild(sprite, 0);
-    }
     return true;
 }
 
