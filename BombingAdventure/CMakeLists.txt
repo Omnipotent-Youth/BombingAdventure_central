@@ -161,6 +161,10 @@ set(GAME_SRC
         Classes/GameScene.cpp
         Classes/RulesScene.cpp
         Classes/Entity.cpp
+<<<<<<< HEAD
+=======
+        Classes/Player.cpp
+>>>>>>> 3109088655479e754e55bafa4f19a4cab6af7543
 #        Classes/test_moving_scene.cpp
         )
 
@@ -171,8 +175,14 @@ set(GAME_HEADERS
         Classes/HelloWorldScene.h
         Classes/GameScene.h
         Classes/RulesScene.h
+<<<<<<< HEAD
 	Classes/Entity.h
 # 	 Classes/test_moving_scene
+=======
+        Classes/Entity.h
+        Classes/Player.h
+#        Classes/test_moving_scene.h
+>>>>>>> 3109088655479e754e55bafa4f19a4cab6af7543
         )
 
 # add the executable
