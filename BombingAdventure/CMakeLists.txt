@@ -160,6 +160,7 @@ set(GAME_SRC
         Classes/HelloWorldScene.cpp
         Classes/GameScene.cpp
         Classes/RulesScene.cpp
+#        Classes/test_moving_scene.cpp
         )
 
 
@@ -169,6 +170,7 @@ set(GAME_HEADERS
         Classes/HelloWorldScene.h
         Classes/GameScene.h
         Classes/RulesScene.h
+#        Classes/test_moving_scene.h
         )
 
 # add the executable

@@ -10,6 +10,8 @@ public:
 
 	virtual bool init();
 
+	virtual void update(float delta);
+
 	CREATE_FUNC(GameScene);
 /*
 	void setPlayerPosition(cocos2d::Vec2 position);
