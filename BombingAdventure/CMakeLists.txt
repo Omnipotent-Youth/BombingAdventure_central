@@ -158,16 +158,17 @@ set(GAME_SRC
         ${PLATFORM_SPECIFIC_SRC}
         Classes/AppDelegate.cpp
         Classes/HelloWorldScene.cpp
-	Classes/RulesScene.cpp
-	Classes/GameScene.cpp        
-	)
+        Classes/GameScene.cpp
+        Classes/RulesScene.cpp
+        )
+
 
 set(GAME_HEADERS
         ${PLATFORM_SPECIFIC_HEADERS}
         Classes/AppDelegate.h
         Classes/HelloWorldScene.h
-	Classes/RulesScene.h
-	Classes/GameScene.h
+        Classes/GameScene.h
+        Classes/RulesScene.h
         )
 
 # add the executable
