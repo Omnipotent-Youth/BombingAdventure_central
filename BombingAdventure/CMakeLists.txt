@@ -26,7 +26,7 @@ cmake_policy(SET CMP0017 NEW)
 
 cmake_minimum_required(VERSION 3.1)
 
-set(APP_NAME MyGame)
+set(APP_NAME Bombing_Adventure)
 project (${APP_NAME})
 
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
@@ -99,7 +99,7 @@ elseif(WINDOWS)
             proj.win32/main.h
             proj.win32/resource.h
             )
-    set(RES_PREFIX "")
+    set(RES_PREFIX "/Resources")
 elseif(IOS)
     set(PLATFORM_SPECIFIC_SRC
             proj.ios_mac/ios/main.m
@@ -160,7 +160,10 @@ set(GAME_SRC
         Classes/HelloWorldScene.cpp
         Classes/GameScene.cpp
         Classes/RulesScene.cpp
+        Classes/Entity.cpp
+#        Classes/test_moving_scene.cpp
         )
+
 
 set(GAME_HEADERS
         ${PLATFORM_SPECIFIC_HEADERS}
@@ -168,6 +171,8 @@ set(GAME_HEADERS
         Classes/HelloWorldScene.h
         Classes/GameScene.h
         Classes/RulesScene.h
+        Classes/Entity.h
+#        Classes/test_moving_scene.h
         )
 
 # add the executable
