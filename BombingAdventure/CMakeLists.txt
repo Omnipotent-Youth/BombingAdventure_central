@@ -99,7 +99,7 @@ elseif(WINDOWS)
             proj.win32/main.h
             proj.win32/resource.h
             )
-    set(RES_PREFIX "")
+    set(RES_PREFIX "/Resources")
 elseif(IOS)
     set(PLATFORM_SPECIFIC_SRC
             proj.ios_mac/ios/main.m
@@ -158,12 +158,16 @@ set(GAME_SRC
         ${PLATFORM_SPECIFIC_SRC}
         Classes/AppDelegate.cpp
         Classes/HelloWorldScene.cpp
-        )
+	Classes/RulesScene.cpp
+	Classes/GameScene.cpp        
+	)
 
 set(GAME_HEADERS
         ${PLATFORM_SPECIFIC_HEADERS}
         Classes/AppDelegate.h
         Classes/HelloWorldScene.h
+	Classes/RulesScene.h
+	Classes/GameScene.h
         )
 
 # add the executable

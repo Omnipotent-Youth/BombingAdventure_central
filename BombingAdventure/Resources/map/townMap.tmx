@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="40" tileheight="40" infinite="0" nextlayerid="12" nextobjectid="6">
+ <tileset firstgid="1" name="Background" tilewidth="40" tileheight="40" tilecount="7" columns="7">
+  <image source="mapItems/background.png" width="280" height="40"/>
+ </tileset>
+ <tileset firstgid="8" name="Tileset" tilewidth="40" tileheight="67" tilecount="8" columns="8">
+  <image source="mapItems/tileset.png" width="320" height="67"/>
+ </tileset>
+ <tileset firstgid="16" name="tiles" tilewidth="40" tileheight="40" tilecount="16" columns="8">
+  <image source="mapItems/tiles.png" width="320" height="80"/>
+ </tileset>
+ <tileset firstgid="32" name = "collide" source="mapItems/collide.tsx"/>
+ <layer id="6" name="Background" width="30" height="30" locked="1" offsetx="-3.90799e-14" offsety="0">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYMSCmYGYDUpjk8eH0fUyYcHE6qWXvSxUwkPFv6P2jto7nOwdzb+j9o7aO2ovqfYO9XIDm52j9o7aO1LspVb+HSr+pbW9ALdJBtE=
+  </data>
+ </layer>
+ <layer id="7" name="Box" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztVQmSwyAM4xmFhOSrefqSVm5VVTm2x26nU88wCsEICztxSv9nfRuFcASGzfPcxmGFo61NzWdqvlO8K5jP2BPKvjP3cNl3HPO84pmxgotxwHMB/zyPmA7XMe3Sy3EFMp/yruktJ/8bzuF67116Y/9gYgMedTKGXtbs4nN8kd+46xFrveAIPYqq1/mN0Keoep2f0xHncX4z7oMxI35Gree0cC8dzmB09by3rlw9d5gzOj5Xz67uXZ2679fF18HH6eX8amxhyunyyzpx1nmdebWenV7cc1rSy/XMccV5rDev6JW8st7k8qt684JeZ0VQ322tr1lNl/8Ro+5335tDPdtx142Y3kHvHq36z3lEr/6n9+jVPUv2276fZaT0WX1f4/r0vs/5/fb9b99nvc/o+3VjvKrvB39Pcf1l31e7p+//AOZL1BU=
+  </data>
+ </layer>
+ <layer id="8" name="BoxOutOfMap" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzty0EKACEMQ9EsHaGeuUe3amC8gZv/oEQblaRW81059Ou+h7vwPs6kz1ldrqy32b3X+bu7dqUAAAAAAM9Nc1gGcQ==
+  </data>
+ </layer>
+ <layer id="9" name="BoxTop" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlQtSwzAMRHWE2vldN0fHKat0u2yCCwMDBc14Nm5sWc9So4iIsY1KukDTtnlp4xLH1t6tbc3a1q75W8V805FU9u2+59u+69jmE55ZJ/hinfFc4X+bZ0yX+5i6eDmuVPanfs946+v6Nz7n+70f4s39s4kNeuVkTV5mdvE5f5nfvOsF70bRBTyqyuvWLeBTVV63znHkeZzfgvtgLYifVes5Du5lwBmsrp5768rV84A5q2N19ezq3tUpbQvOr8Y3YI3j5fwqa5r6dPllTpy1v2e/Ws+OF/ccyuvqmePK85i3nPBKXpk3TH53S95ywOusnvxW5blnL9sUt+8Rq/p0/zenGpvzPb0T00/g7WHVb85neDXuHl63z9mjfb/IiNh5n6Lva1zP3vc5v/99/3f3fc4v21/v+2nf2ffVXH6V95G+/5X2AkyKvco=
+  </data>
+ </layer>
+ <layer id="11" name="collide" width="30" height="30" opacity="0.72">
+  <properties>
+   <property name="collidable" value="true"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztkFEOwCAIQzkKR/eo+5lLY7C1W/ZHkwYHwsNFtFqt1nvl7YCI+VND35hxnhk3i2/TD2eeT7lJ8srQN9LkKqaoD6jb702SZ155Dle8R9UH1CW32gPjmhN1i4OuOMrIzMP/XO2BsdqD1C0OuuIos543e2Augr/3C4fNqu6pPraHmu96tw/jrvcc1sm83T2Xt2M43IhvbOxb57Zaf+oCG003AQ==
+  </data>
+ </layer>
+ <objectgroup id="10" name="object1">
+  <object id="3" name="spawn" x="561.333" y="480" width="74.6667" height="34.6667"/>
+ </objectgroup>
+</map>
