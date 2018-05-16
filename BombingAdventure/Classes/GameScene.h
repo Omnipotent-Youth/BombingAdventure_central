@@ -2,6 +2,7 @@
 #define GAMESCENE_H
 
 #include "cocos2d.h"
+#include "Player.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -14,6 +15,7 @@ public:
 
 	virtual void update(float delta);
 
+<<<<<<< HEAD
 	bool isOutOfMap(cocos2d::Vec2 pos);
 
 	bool collideWithBrick(cocos2d::Vec2 targetPos);
@@ -23,6 +25,8 @@ public:
 	void makeMove(cocos2d::Vec2 position);
 
 	/* macro for creating layer */
+=======
+>>>>>>> 3109088655479e754e55bafa4f19a4cab6af7543
 	CREATE_FUNC(GameScene);
 
 	/**
@@ -54,7 +58,17 @@ public:
 	 *
 	 */
 
+<<<<<<< HEAD
 	cocos2d::Vec2 tileCoordFromPosition(cocos2d::Vec2 position);
+=======
+private:
+	cocos2d::TMXTiledMap * map;
+	cocos2d::TMXLayer * collidable;
+//	cocos2d::Sprite * player;
+
+	/* Test class Player part   */
+    Player * hero;      /* This is the player control by human  */
+>>>>>>> 3109088655479e754e55bafa4f19a4cab6af7543
 
 private:
 	cocos2d::TMXTiledMap * map;		/* the tile map for Bombing Adventure game */
