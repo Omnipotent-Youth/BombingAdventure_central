@@ -2,6 +2,7 @@
 #define GAMESCENE_H
 
 #include "cocos2d.h"
+#include "Player.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -25,7 +26,10 @@ public:
 private:
 	cocos2d::TMXTiledMap * map;
 	cocos2d::TMXLayer * collidable;
-	cocos2d::Sprite * player;
+//	cocos2d::Sprite * player;
+
+	/* Test class Player part   */
+    Player * hero;      /* This is the player control by human  */
 
 };
 
