@@ -1,8 +1,18 @@
 #include "GameScene.h"
 
-using namespace std;
+//using namespace std;
 USING_NS_CC;
 
+/* Following constants are the marks of movement status     */
+const int MOVE_LEFT = -1;
+const int MOVE_RIGHT = 1;
+const int MOVE_UP = 1;
+const int MOVE_DOWN = -1;
+const int MOVE_STOP = 0;
+
+/* Following variables mark the movement status of player   */
+int x_movement = MOVE_STOP;         /* Initiate with player stops   */
+int y_movement = MOVE_STOP;         /* Initiate with player stops   */
 
 Scene * GameScene::createScene()
 {
@@ -42,8 +52,83 @@ bool GameScene::init() {
 	setTouchEnabled(TRUE);
 	setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
 */
-	return true;
+    /* Following are keyboard listener  */
 
+    /* Callback Function: game_keyboard_listener
+     * -----------------------------------------
+     *      ->onKeyPressed: listen to the keyboard event "press".
+     *                      Mark A or arrow_left as move_left;
+     *                           D or arrow_right as move_right;
+     *                           W or arrow_up as move_up;
+     *                           S or arrow_down as move_down;
+     *                      Player can press and hold the key to move,
+     *                      instead of pressing the same key repeatedly.
+     *      ->onKeyRelease: listen to the keyboard event "release".
+     *                      Mark the corresponding key release as the
+     *                      end of movement on that direction.
+     */
+    auto game_keyboard_listener = EventListenerKeyboard::create();
+    game_keyboard_listener->onKeyPressed = [](EventKeyboard::KeyCode keyboard_code, Event* event) {
+        switch (keyboard_code) {
+            case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+            case EventKeyboard::KeyCode::KEY_A:
+                x_movement = MOVE_LEFT;
+                break;
+            case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+            case EventKeyboard::KeyCode::KEY_D:
+                x_movement = MOVE_RIGHT;
+                break;
+            case EventKeyboard::KeyCode::KEY_UP_ARROW:
+            case EventKeyboard::KeyCode::KEY_W:
+                y_movement = MOVE_UP;
+                break;
+            case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
+            case EventKeyboard::KeyCode::KEY_S:
+                y_movement = MOVE_DOWN;
+                break;
+        }
+    };
+    game_keyboard_listener->onKeyReleased = [](EventKeyboard::KeyCode keyboard_code, Event* event) {
+        switch (keyboard_code) {
+            case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+            case EventKeyboard::KeyCode::KEY_A:
+                x_movement = MOVE_STOP;
+                break;
+            case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+            case EventKeyboard::KeyCode::KEY_D:
+                x_movement = MOVE_STOP;
+                break;
+            case EventKeyboard::KeyCode::KEY_UP_ARROW:
+            case EventKeyboard::KeyCode::KEY_W:
+                y_movement = MOVE_STOP;
+                break;
+            case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
+            case EventKeyboard::KeyCode::KEY_S:
+                y_movement = MOVE_STOP;
+                break;
+        }
+    };
+
+    /* Register keyboard event listener */
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(game_keyboard_listener, player);
+
+    /* Enable update function of the GameScene, which controls the refreshments */
+    this->scheduleUpdate();
+
+	return true;
+}
+void GameScene::update(float delta) {
+    
+    /* Following part updates the movement of player    */
+    float position_x = player->getPositionX();
+    float position_y = player->getPositionY();
+
+    float moving_speed = 10.f;
+
+    position_x += x_movement * moving_speed;
+    position_y += y_movement * moving_speed;
+
+    player->setPosition(position_x, position_y);
 }
 
 /*
