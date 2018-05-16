@@ -118,7 +118,7 @@ bool GameScene::init() {
 	return true;
 }
 void GameScene::update(float delta) {
-    
+
     /* Following part updates the movement of player    */
     float position_x = player->getPositionX();
     float position_y = player->getPositionY();
