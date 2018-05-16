@@ -161,6 +161,7 @@ set(GAME_SRC
         Classes/GameScene.cpp
         Classes/RulesScene.cpp
         Classes/Entity.cpp
+        Classes/Player.cpp
 #        Classes/test_moving_scene.cpp
         )
 
@@ -172,6 +173,7 @@ set(GAME_HEADERS
         Classes/GameScene.h
         Classes/RulesScene.h
         Classes/Entity.h
+        Classes/Player.h
 #        Classes/test_moving_scene.h
         )
 
