@@ -85,13 +85,6 @@ public:
      */
     float get_moving_speed();
 
-    /* Method Overriding: getContentSize
-     * Usage: Size size = Player->getContentSize();
-     * -------------------------------------------------------
-     * Get the size of the player, which equals to its sprite.
-     */
-    virtual const Size & getContentSize();
-
 protected:
     /*    Instance variables    */
     //  Models
