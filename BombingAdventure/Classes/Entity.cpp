@@ -5,20 +5,21 @@
 #include "Entity.h"
 
 Entity::Entity() {
-    entity_spirte = NULL;
+    entity_sprite = NULL;
 }
 
 Entity::~Entity() {
 
 }
 Sprite* Entity::get_sprite() {
-    return this->entity_spirte;
+    return this->entity_sprite;
 }
 void Entity::bind_sprite(Sprite *sprite) {
-    this->entity_spirte = sprite;
-    this->addChild(entity_spirte);
-}
 
+    this->entity_sprite = sprite;
+    this->addChild(entity_sprite);
+}
 const Size& Entity::getContentSize() {
-	return this->get_sprite()->getContentSize();
+    return this->get_sprite()->getContentSize();
+
 }
