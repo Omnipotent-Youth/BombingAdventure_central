@@ -12,11 +12,10 @@
 
 USING_NS_CC;
 
-/* Following are the attributes of Player   */
+
 const int PLAYER_DEFAULT_HP = 3;
 const int PLAYER_DEFAULT_AVAILABLE_BOMBS = 3;
-const float PLAYER_DEFAULT_MOVING_SPEED = 8.0f;
-
+const float PLAYER_DEFAULT_MOVING_SPEED = 3.0f;
 
 class Player : public Entity {
 public:
@@ -85,8 +84,10 @@ public:
      */
     float get_moving_speed();
 
+
 protected:
     /*    Instance variables    */
+
     //  Models
     int HP;
     float moving_speed;

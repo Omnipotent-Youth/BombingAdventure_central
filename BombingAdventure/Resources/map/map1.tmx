@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="24" height="18" tilewidth="40" tileheight="40" infinite="0" nextlayerid="14" nextobjectid="2">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="24" height="16" tilewidth="40" tileheight="40" infinite="0" nextlayerid="21" nextobjectid="2">
  <tileset firstgid="1" name="Background" tilewidth="40" tileheight="40" tilecount="7" columns="7">
   <image source="mapItems/background.png" width="280" height="40"/>
  </tileset>
@@ -7,35 +7,30 @@
   <image source="mapItems/tiles.png" width="320" height="80"/>
  </tileset>
  <tileset firstgid="24" source="mapItems/collide.tsx"/>
- <layer id="5" name="background" width="24" height="18">
+ <layer id="14" name="background" width="24" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYIRiZiBmg9KMJGJ0vUxQjE/NUDOfhUp4uIbPqPmj5lNi/lDJX0zDyPyhDgBpeQMM
+   eJxjZGBgYIRiZiBmg9KMJGJ0vUxQjE/NUDOfhUp4uIbPqPmj5lNi/lDJX0zDyHwAIFsDDA==
   </data>
  </layer>
- <layer id="6" name="bricks" width="24" height="18">
-  <data encoding="base64" compression="zlib">
-   eJzVlOEKwyAMhPMI1k59XR99ul7ocUQq7MdYQE5tk3wGTTKzwy7LdlvD/kt0jD7mnXX82+2O8ZnP/TTGjHmOUSlHxjohJmtCTNZ6xekee65PrN2vBfwZ3KwZ3KzK3yi/8vsZasDupmeoxK787u+8foaIH/WxFX+mNeVf8kvdmd+i+iv/QXscm1X3nr6rTc4C1f+0/ivVHBzzl/w77Po2d/iZc5dffdz8/kXvi+t7yMD5wv7Q6P56jKg/FMxZC3xZo/7guVf84NvqP+yj/BWxo/fVAm3gVdX35fvRHeD6f9uf7c/tDWHJR/U=
-  </data>
- </layer>
- <layer id="7" name="tops" width="24" height="18">
-  <data encoding="base64" compression="zlib">
-   eJztlMESwyAIRDlWk+gv++nVZkm3G5x666XMMCuZgA9izGa2dS92WoaP+NE9iXZvfd1Y+7stw+3MbRvihLoVdU3iXXTk7MjdqabbiCvtn4XfeygBu5v2UGQf5vd85/UeIn7Mx5S/onammPaf8svcmd+C+V/m/Elm57Vnz7KsV3IH5wHVXJ3/TJWBa/6Sf4U9Sc4Kv3Ks8Ed5w/z8Rf8XzzeJU3/X+cQ+r9jPr9eI7ocDa9YDuazR/eDnd8ZPfF/vH5nTB39B7ej/qoFW8Krq/eDPozPA899F03uul+r88b1uvf3tbk+bjzgo
-  </data>
- </layer>
- <layer id="11" name="collide" width="24" height="18" opacity="0.57">
+ <layer id="15" name="bricks" width="24" height="16">
   <properties>
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzVkl0KACEIhOcYHd+j7sOu4IbjT9FDghipX5M4AAy8plHPHTd9ovHzX02Xa1wctgQ6lvUzfsZO8kLecDkr+h3tx/VjMrZLlhvkXZ43m+gfbDaz9sv0Ux57r6O/wot6sh1mvN297zKiv+32dLmdfhRqqmw497faAzaHLkE=
+   eJytlIEKwyAMRPMJ1k79XT99ul7occRO2AQ5I03yTDXJzA67RrZ7NOy/RMfsY91Zx7fd7hif9dxPY86Y55iVcmTYCTFZE2Ky1itO99jTPmG7Xwv4M7hZM7hZlb9RfuX3M9SA3YeeoRK78ru/8/oZIn7Ux1b8mWzKv+SXujO/RfVX/oP2ODarr7/Z6kO5rED1O63/SjUHx9zlV+5/8O+w69vc4X+q79P/ifj9/kXvi+t7yMT5wv7Q6P56jKg/FKxZC3xZo/7guVf84AvvivYf9lH+itjR+2qBNvCq6vvy/egOcP1/7c9v4VBHZQ==
+  </data>
+ </layer>
+ <layer id="16" name="tops" width="24" height="16">
+  <data encoding="base64" compression="zlib">
+   eJy1lMESwyAIRDlWYvSX/fRqsyR0i6mH1hlmQybgg6AqIlu3IsdS2PAf3RJpt9afm9f+bVOYHLFtg5+QtyKvkJ9JR0xGbHY5bQ2/uv2V+K2GErDb4hoK7eP5Ld54rYaIH/0R5q/Irc53+0/5qe+eX4L+n8v4E/XOckfv9Ma/ix2cO1TpO+7/TIVifc5Vfub+Bf8Ke6KYFX7mWOGf/RObv+h8+f4mMlffOZ/Y5+Xb/FqO6H7Y8ex1R6zX6H6w+Z3xO76v9w/16Y2/IHd0vmqgFbysfD/Y+2gGfP8zabr6eir13/7XR23/WE9EmTeo
+  </data>
+ </layer>
+ <layer id="20" name="destructable" width="24" height="16">
+  <data encoding="base64" compression="zlib">
+   eJzNlFEKgDAMQ3uM3v+kfoggIS+zgrKBjNo2fXarXVVd57r2Evu+u3eU0+B3MenRPNX6k59iWvwrNuJXnQk/9fZL/qTtuMgmvaQ9vT9varh6yb8Df+pvOh/STrOS7hLNLDGR7XjpG4gt8T/pf6qta3VGk5w0g9P/g4s9APGqEUE=
   </data>
  </layer>
  <objectgroup id="4" name="object1">
-  <object id="1" name="spawn" x="441.333" y="197.333" width="76" height="37.3333"/>
+  <object id="1" name="spawn" x="441.333" y="197.333" width="76" height="76"/>
  </objectgroup>
- <layer id="10" name="destroyable" width="24" height="18" opacity="0.46">
-  <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRMAqGHgAABsAAAQ==
-  </data>
- </layer>
 </map>
