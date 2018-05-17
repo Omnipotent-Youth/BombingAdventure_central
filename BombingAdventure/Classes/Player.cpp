@@ -7,9 +7,9 @@ USING_NS_CC;
 
 Player::Player() {
     /* Default attributes of a new player   */
-    HP = DEFAULT_HP;
-    moving_speed = DEFAULT_MOVING_SPEED;
-    num_max_available_bombs = DEFAULT_AVAILABLE_BOMBS;
+    HP = PLAYER_DEFAULT_HP;
+    moving_speed = PLAYER_DEFAULT_MOVING_SPEED;
+    num_max_available_bombs = PLAYER_DEFAULT_AVAILABLE_BOMBS;
     num_present_bombs = 0;
     /* Default view of a new player         */
             bind_sprite(Sprite::create("player/player-front.png"));
@@ -23,6 +23,9 @@ bool Player::init() {
 }
 bool Player::can_set_bomb() {
     return num_present_bombs < num_max_available_bombs;
+}
+bool Player::is_alive() {
+    return HP > 0;
 }
 float Player::get_moving_speed() {
     return moving_speed;
@@ -38,4 +41,25 @@ void Player::set_bomb() {
     bomb->setPosition(this->getPosition());
     this->getParent()->addChild(bomb);
     ++(this->num_present_bombs);
+}
+void Player::set_moving_speed(float new_speed) {
+    moving_speed = new_speed;
+}
+void Player::pick_item(Item & item) {
+    int item_id = item.get_item_id();
+    switch (item_id) {
+        case Item::POWER_UP:
+            /* Not yet  */
+            break;
+        case Item::SPEED_UP:
+            this->set_moving_speed(++moving_speed);
+            break;
+        case Item::HP_UP:
+            ++(this->HP);
+            break;
+        case Item::NUM_BOMBS_UP:
+            ++(this->num_max_available_bombs);
+            break;
+    }
+    item.removeFromParent();
 }
