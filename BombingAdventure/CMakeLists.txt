@@ -175,7 +175,7 @@ set(GAME_HEADERS
         Classes/HelloWorldScene.h
         Classes/GameScene.h
         Classes/RulesScene.h
-        Classes/Entity.h
+	Classes/Entity.h
         Classes/Player.h
 #        Classes/test_moving_scene.h
 #        Classes/Monster.h

@@ -27,6 +27,12 @@
     <ClCompile Include="..\Classes\RulesScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Entity.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -44,10 +50,14 @@
     <ClInclude Include="..\Classes\RulesScene.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Entity.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\Resources">
-      <Filter>resource</Filter>
-    </ResourceCompile>
+    <ResourceCompile Include="game.rc" />
   </ItemGroup>
 </Project>
