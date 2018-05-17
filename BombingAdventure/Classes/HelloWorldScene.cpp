@@ -44,8 +44,8 @@ bool HelloWorld::init()
 		CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
 	auto startItem = MenuItemImage::create(
-		"Start.png",
-		"Start.png",
+		"newGame_normal.png",
+		"newGame_selected.png",
 		CC_CALLBACK_1(HelloWorld::menuStartScene, this));
 
 	auto rulesItem = MenuItemImage::create(
@@ -69,9 +69,9 @@ bool HelloWorld::init()
 
 	startItem->setAnchorPoint(Vec2(0.5, 0.5));
 	rulesItem->setAnchorPoint(Vec2(0.5, 0.5));
-	startItem->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	startItem->setPosition(Vec2(visibleSize.width / 2, 2 * visibleSize.height / 3));
 	startItem->setScale(0.5);
-	rulesItem->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	rulesItem->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 - 50));
 	rulesItem->setScale(0.5);
 
 
@@ -87,19 +87,13 @@ bool HelloWorld::init()
     // create and initialize a label
 
     auto label = Label::createWithTTF("BombingAdventure","fonts/Marker Felt.ttf", 42);
-    if (label == nullptr)
-    {
-        problemLoading("'fonts/Marker Felt.ttf'");
-    }
-    else
-    {
-        // position the label on the center of the screen
-        label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                origin.y + visibleSize.height - label->getContentSize().height));
+    // position the label on the center of the screen
+    label->setPosition(Vec2(origin.x + visibleSize.width/2,
+                            origin.y + visibleSize.height - label->getContentSize().height));
+	// add the label as a child to this layer
+    this->addChild(label, 1);
 
-        // add the label as a child to this layer
-        this->addChild(label, 1);
-    }
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("music&effect/HelloMusic.mp3", true);
 
     return true;
 }

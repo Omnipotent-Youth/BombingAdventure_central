@@ -1,4 +1,4 @@
-#ifndef GAMESCENE_H
+﻿#ifndef GAMESCENE_H
 #define GAMESCENE_H
 
 #include "cocos2d.h"
@@ -15,7 +15,29 @@ public:
 
 	virtual void update(float delta);
 
-<<<<<<< HEAD
+	/**
+	 * Method:bomb_explode
+	 * Usage: bomb_explode();
+	 * ---------------------
+	 * psuedo code:
+	 * Bomb *Bomb= currentBomb.pop();
+	 * bombPower = Bomb->power;
+	 * bombPos = Bomb->position;
+	 * Size bombTileCoord = tileCoordFromPosition(bombPos);
+	 * for (int i = bombTileCoord.x; i <= bombTileCoord+2*bombPower; i++){
+	 *		GID = getGID(i, bombTileCoord.y);
+	 *		if GID.isInBricksLayer() && ！dectructable : (是砖块，但是炸不了.需要挡住此砖左边/右边的爆炸效果)
+	 *		if GID.isDectructable(): removeTile()... (移除砖块，移除可爆炸块，遮挡爆炸效果)
+	 * }
+	 * for (int j = bombTileCoord.y; j <= bombTileCoord+2*bombPower; j++){
+	 *		same operations...
+	 * }
+	 *
+	 * 这个函数实现：判定炸弹爆炸的有效范围（是否被砖块挡住），把范围内的可炸(dectructable)砖块炸掉。
+	 * 炸弹炸到人的判定可以再写一个函数？
+	 */
+	void bomb_explode();
+
 	bool isOutOfMap(cocos2d::Vec2 pos);
 
 	bool collideWithBrick(cocos2d::Vec2 targetPos);
@@ -25,13 +47,11 @@ public:
 	void makeMove(cocos2d::Vec2 position);
 
 	/* macro for creating layer */
-=======
->>>>>>> 3109088655479e754e55bafa4f19a4cab6af7543
 	CREATE_FUNC(GameScene);
 
 	/**
-	 * Function: tileCoordFromPosition
-	 * Usage: Vec2 Pos = this->tileCoordFromPosition();
+	 * Method: tileCoordFromPosition
+	 * Usage: Vec2 Pos = this->tileCoordFromPosition(Vec2 position);
 	 * -----------------------------------------------
 	 * Takes a parameter of Vec2 type, indicating the position that the user want
 	 * to convert. Then, this function will convert it into the tile coordinate.
@@ -58,21 +78,18 @@ public:
 	 *
 	 */
 
-<<<<<<< HEAD
 	cocos2d::Vec2 tileCoordFromPosition(cocos2d::Vec2 position);
-=======
+
 private:
-	cocos2d::TMXTiledMap * map;
+
+	Vector<cocos2d::Node*> currentBomb;
+	cocos2d::TMXTiledMap * map;		/* the tile map for Bombing Adventure game */
 	cocos2d::TMXLayer * collidable;
 //	cocos2d::Sprite * player;
 
 	/* Test class Player part   */
-    Player * hero;      /* This is the player control by human  */
->>>>>>> 3109088655479e754e55bafa4f19a4cab6af7543
+    Player * hero;      /* This is the player control by human */
 
-private:
-	cocos2d::TMXTiledMap * map;		/* the tile map for Bombing Adventure game */
-	cocos2d::Sprite * player;		/* a key-controlled sprite                 */	
 };
 
 

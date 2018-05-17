@@ -14,6 +14,7 @@ Player::Player() {
     /* Default view of a new player         */
             bind_sprite(Sprite::create("player/player-front.png"));
             this->setAnchorPoint(Vec2(0.5,0.5));
+			this->_contentSize = getContentSize();
 }
 Player::~Player() {
     /* Not yet  */
@@ -27,6 +28,7 @@ bool Player::can_set_bomb() {
 float Player::get_moving_speed() {
     return moving_speed;
 }
+
 int Player::get_HP() {
     return HP;
 }

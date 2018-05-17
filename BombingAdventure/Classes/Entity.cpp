@@ -18,3 +18,7 @@ void Entity::bind_sprite(Sprite *sprite) {
     this->entity_spirte = sprite;
     this->addChild(entity_spirte);
 }
+
+const Size& Entity::getContentSize() {
+	return this->get_sprite()->getContentSize();
+}

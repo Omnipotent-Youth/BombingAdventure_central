@@ -10,7 +10,6 @@ const int MOVE_UP = 1;
 const int MOVE_DOWN = -1;
 const int MOVE_STOP = 0;
 
-<<<<<<< HEAD
 /* Following variables mark the movement status of player   */
 int x_movement = MOVE_STOP;         /* Initiate with player stops   */
 int y_movement = MOVE_STOP;         /* Initiate with player stops   */
@@ -18,11 +17,6 @@ int y_movement = MOVE_STOP;         /* Initiate with player stops   */
 /*
  * Implementation Note: similar to HelloWorldScene::createScene().
  */
-=======
-/* Following variables mark the status of player   */
-int x_movement = MOVE_STOP;         /* Initiate with player stops   */
-int y_movement = MOVE_STOP;         /* Initiate with player stops   */
->>>>>>> 3109088655479e754e55bafa4f19a4cab6af7543
 
 Scene * GameScene::createScene()
 {
@@ -71,24 +65,17 @@ bool GameScene::init() {
 	
 	// get the spawn point and its coordinate
 	ValueMap spawnPoint = group->getObject("spawn");
-<<<<<<< HEAD
-	float x = spawnPoint["x"].asFloat();
-	float y = spawnPoint["y"].asFloat();
-	
+
 	/* Initiate the player sprite, set its position at the spawn point,
 	 * and add it into the game scene.
 	 */
-	player = Sprite::create("player1_default.png");
-	player->setAnchorPoint(Vec2(0.5, 0.5));
-	player->setPosition(Vec2(x+20, y+30));
-	addChild(player, 2, 200);
-=======
+
 
     /* Create the hero  */
     float x = spawnPoint["x"].asFloat();
     float y = spawnPoint["y"].asFloat();
     hero = Player::create();
-    hero->setPosition(Vec2(x+20, y-50));
+    hero->setPosition(Vec2(x+20, y+70));
     this->addChild(hero, 2, 200);
 
     /* Following are keyboard listener  */
@@ -161,98 +148,25 @@ bool GameScene::init() {
 
 	return true;
 }
-void GameScene::update(float delta) {
 
-    /* Following part updates the movement of player    */
-    float position_x = hero->getPositionX();
-    float position_y = hero->getPositionY();
 
-    float moving_speed = hero->get_moving_speed();
-
-    position_x += x_movement * moving_speed;
-    position_y += y_movement * moving_speed;
-
-    hero->setPosition(position_x, position_y);
->>>>>>> 3109088655479e754e55bafa4f19a4cab6af7543
-
-		/* Following are keyboard listener  */
-
-		/* Callback Function: game_keyboard_listener
-		* -----------------------------------------
-		*      ->onKeyPressed: listen to the keyboard event "press".
-		*                      Mark A or arrow_left as move_left;
-		*                           D or arrow_right as move_right;
-		*                           W or arrow_up as move_up;
-		*                           S or arrow_down as move_down;
-		*                      Player can press and hold the key to move,
-		*                      instead of pressing the same key repeatedly.
-		*      ->onKeyRelease: listen to the keyboard event "release".
-		*                      Mark the corresponding key release as the
-		*                      end of movement on that direction.
-		*/
-	auto game_keyboard_listener = EventListenerKeyboard::create();
-	game_keyboard_listener->onKeyPressed = [](EventKeyboard::KeyCode keyboard_code, Event* event) {
-		switch (keyboard_code) {
-			case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-			case EventKeyboard::KeyCode::KEY_A:
-				x_movement = MOVE_LEFT;
-				break;
-			case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-			case EventKeyboard::KeyCode::KEY_D:
-				x_movement = MOVE_RIGHT;
-				break;
-			case EventKeyboard::KeyCode::KEY_UP_ARROW:
-			case EventKeyboard::KeyCode::KEY_W:
-				y_movement = MOVE_UP;
-				break;
-			case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-			case EventKeyboard::KeyCode::KEY_S:
-				y_movement = MOVE_DOWN;
-				break;
-		}
-	};
-	game_keyboard_listener->onKeyReleased = [](EventKeyboard::KeyCode keyboard_code, Event* event) {
-		switch (keyboard_code) {
-		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-		case EventKeyboard::KeyCode::KEY_A:
-			x_movement = MOVE_STOP;
-			break;
-		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-		case EventKeyboard::KeyCode::KEY_D:
-			x_movement = MOVE_STOP;
-			break;
-		case EventKeyboard::KeyCode::KEY_UP_ARROW:
-		case EventKeyboard::KeyCode::KEY_W:
-			y_movement = MOVE_STOP;
-			break;
-		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-		case EventKeyboard::KeyCode::KEY_S:
-			y_movement = MOVE_STOP;
-			break;
-		}
-	};
-
-	/* Register keyboard event listener */
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(game_keyboard_listener, player);
-
-	/* Enable update function of the GameScene, which controls the refreshments */
-	this->scheduleUpdate();
-
-	return true;
-}
 
 void GameScene::update(float delta) {
 
 	/* Following part updates the movement of player    */
-	float position_x = player->getPositionX();
-	float position_y = player->getPositionY();
+	float position_x = hero->getPositionX();
+	float position_y = hero->getPositionY();
 
-	float moving_speed = 2.f;
+	float moving_speed = hero->get_moving_speed();
 
 	position_x += x_movement * moving_speed;
 	position_y += y_movement * moving_speed;
 
 	makeMove(Vec2(position_x, position_y));
+}
+
+void GameScene::bomb_explode()
+{
 }
 
 bool GameScene::isOutOfMap(Vec2 pos) 
@@ -299,14 +213,15 @@ void GameScene::makeMove(Vec2 position)
 	Vec2 targetPos = position;
 
 	// correct the detection deviation caused by the sprite size
-	Size figSize = player->getContentSize();
+	Size figSize = hero->getContentSize();
+
 	if (y_movement == MOVE_STOP) {
 		switch (x_movement) {
 		case MOVE_LEFT:
-			targetPos.x -= 4 * figSize.width / 9;
+			targetPos.x -= 1 * figSize.width / 3;
 			break;
 		case MOVE_RIGHT:
-			targetPos.x += 4 * figSize.width / 9;
+			targetPos.x += 1 * figSize.width / 3;
 			break;
 		}
 	}
@@ -318,24 +233,24 @@ void GameScene::makeMove(Vec2 position)
 			}
 			else {
 				if (x_movement == MOVE_LEFT) {
-					targetPos.x -= figSize.width / 2;
+					targetPos.x -= 1 * figSize.width / 3;
 				}
 				else {
-					targetPos.x += figSize.width / 2;
+					targetPos.x += 1 * figSize.width / 3;
 				}
 				break;
 			}
 		case MOVE_DOWN:
-			targetPos.y -= figSize.height / 2;
+			targetPos.y -= figSize.height / 2 + 3;
 			if (x_movement == MOVE_STOP) {
 				break;
 			}
 			else {
 				if (x_movement == MOVE_LEFT) {
-					targetPos.x -= figSize.width / 2;
+					targetPos.x -= 1 * figSize.width / 3;
 				}
 				else {
-					targetPos.x += figSize.width / 2;
+					targetPos.x += 1 * figSize.width / 3;
 				}
 				break;
 			}
@@ -347,7 +262,7 @@ void GameScene::makeMove(Vec2 position)
 
 	if (collideWithBrick(targetPos) || collideWithBubble(targetPos)) return;
 
-	player->setPosition(position);
+	hero->setPosition(position);
 }
 
 Vec2 GameScene::tileCoordFromPosition(Vec2 position)

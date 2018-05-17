@@ -14,7 +14,7 @@ USING_NS_CC;
 /* Following are the attributes of player   */
 const int DEFAULT_HP = 3;
 const int DEFAULT_AVAILABLE_BOMBS = 3;
-const float DEFAULT_MOVING_SPEED = 8.0f;
+const float DEFAULT_MOVING_SPEED = 3.0f;
 
 
 class Player : public Entity {
@@ -68,6 +68,8 @@ public:
      * Get the moving speed of the player.
      */
     float get_moving_speed();
+
+
 
 private:
 //    Instance variables
