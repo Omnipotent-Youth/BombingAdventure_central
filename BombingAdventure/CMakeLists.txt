@@ -163,6 +163,9 @@ set(GAME_SRC
         Classes/Entity.cpp
         Classes/Player.cpp
 #        Classes/test_moving_scene.cpp
+#        Classes/Monster.cpp
+#        Classes/MonsterController.cpp
+        Classes/Item.cpp
         )
 
 
@@ -175,6 +178,9 @@ set(GAME_HEADERS
         Classes/Entity.h
         Classes/Player.h
 #        Classes/test_moving_scene.h
+#        Classes/Monster.h
+#        Classes/MonsterController.h
+        Classes/Item.h
         )
 
 # add the executable
