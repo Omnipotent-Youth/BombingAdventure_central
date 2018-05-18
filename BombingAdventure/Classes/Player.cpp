@@ -26,22 +26,32 @@ bool Player::init() {
     return true;
 }
 bool Player::can_set_bomb() {
-    return num_present_bombs < num_max_available_bombs;
+    if (get_sprite() != NULL) {
+        return num_present_bombs < num_max_available_bombs;
+    }
+    return false;
 }
 bool Player::is_alive() {
-    return HP > 0;
+    if (get_sprite() != NULL) {
+        return HP > 0;
+    }
+    return false;
 }
 float Player::get_moving_speed() {
+    if (get_sprite() == NULL) return -1;
     return moving_speed;
 }
 
 int Player::get_HP() {
+    if (get_sprite() == NULL) return -1;
     return HP;
 }
 int Player::get_num_available_bombs() {
+    if (get_sprite() == NULL) return -1;
     return num_max_available_bombs - num_present_bombs;
 }
 void Player::set_bomb() {
+    if (get_sprite() == NULL) return;   /* Avoid strange things happened :) */
     Bomb * bomb = Bomb::create();
     bomb->setPosition(this->getPosition());
     this->getParent()->addChild(bomb);
@@ -52,8 +62,8 @@ void Player::set_bomb() {
 
     --(this->num_present_bombs);
 }
-
 void Player::pick_item(Item & item) {
+    if (get_sprite() == NULL) return;   /* Avoid strange things happened :) */
     int item_id = item.get_item_id();
     switch (item_id) {
         case Item::POWER_UP:
@@ -76,4 +86,12 @@ void Player::pick_item(Item & item) {
     log("Pick item.");
     log("Now my speed is %f", moving_speed);
     item.is_picked = true;
+}
+void Player::injured(int deduct_HP) {
+    if (get_sprite() != NULL) {
+        HP -= deduct_HP;
+        if (HP < 0) {
+            HP = 0;
+        }
+    }
 }

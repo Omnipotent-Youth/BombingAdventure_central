@@ -46,6 +46,13 @@ public:
      */
     void pick_item(Item & item);
 
+    /* Method: injured
+     * Usage: Player->injured(deduct_HP);
+     * ----------------------------------
+     * Deducts the HP of the player by deduct_HP.
+     */
+    void injured(int deduct_HP = 1);
+
 //  View
 
 //  Models
