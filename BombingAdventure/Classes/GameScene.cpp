@@ -49,6 +49,10 @@ bool GameScene::init() {
     hero->setPosition(Vec2(x+20, y-50));
     this->addChild(hero, 2, 200);
 
+    /* Test item    */
+    item = Item::create();
+    item->setPosition(Vec2(300, 400));
+    this->addChild(item, 3, 200);
     /* Following are keyboard listener  */
 
     /* Callback Function: game_keyboard_listener
@@ -86,6 +90,10 @@ bool GameScene::init() {
             case EventKeyboard::KeyCode::KEY_SPACE:
                 if (hero->can_set_bomb()) {
                     hero->set_bomb();
+//                    status_map.insert(hero->getPosition(), BOMB);
+//                    log("The current position status is %d", status_map.at(hero->getPosition()));
+//                    status_map.insert(hero->getPosition(), EMPTY);
+//                    log("The current position status is %d", status_map.at(hero->getPosition()));
                 }
                 break;
         }
@@ -132,6 +140,12 @@ void GameScene::update(float delta) {
 
     hero->setPosition(position_x, position_y);
 
+//    /* Test pick_item method    */
+//    auto item_position = item->getPosition();
+//    auto hero_position = hero->getPosition();
+//    if (item_position == hero_position) {
+//        hero->pick_item(*item);
+//    }
 }
 
 /*

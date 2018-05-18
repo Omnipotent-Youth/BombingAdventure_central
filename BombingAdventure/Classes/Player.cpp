@@ -12,7 +12,9 @@ Player::Player() {
     num_max_available_bombs = PLAYER_DEFAULT_AVAILABLE_BOMBS;
     num_present_bombs = 0;
     /* Default view of a new player         */
-            bind_sprite(Sprite::create("player/player-front.png"));
+//            std::string player_file_name = "player1_default.png";
+//            bind_sprite(Sprite::create(player_file_name));
+        bind_sprite(Sprite::create("player1_default.png"));
             this->setAnchorPoint(Vec2(0.5,0.5));
 }
 Player::~Player() {
@@ -61,5 +63,6 @@ void Player::pick_item(Item & item) {
             ++(this->num_max_available_bombs);
             break;
     }
-    item.removeFromParent();
+    log("Pick item");
+//    item.removeFromParent();
 }
