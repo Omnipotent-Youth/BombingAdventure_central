@@ -3,7 +3,10 @@
 //
 
 #include "Player.h"
+#include "Bomb.h"
 USING_NS_CC;
+
+
 
 Player::Player() {
     /* Default attributes of a new player   */
@@ -39,11 +42,17 @@ int Player::get_num_available_bombs() {
     return num_max_available_bombs - num_present_bombs;
 }
 void Player::set_bomb() {
-    Sprite* bomb = Sprite::create("blue_bomb.png");
+    Bomb * bomb = Bomb::create();
     bomb->setPosition(this->getPosition());
     this->getParent()->addChild(bomb);
+    
     ++(this->num_present_bombs);
+
+    bomb->startCounting(2.5f);
+
+    --(this->num_present_bombs);
 }
+
 void Player::set_moving_speed(float new_speed) {
     moving_speed = new_speed;
 }
