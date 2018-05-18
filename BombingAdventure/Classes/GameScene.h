@@ -83,6 +83,8 @@ public:
 
 	cocos2d::Vec2 tileCoordFromPosition(cocos2d::Vec2 position);
 
+	/* Test pick item   */
+//	Item * speed_up_item;
 private:
 
 	Vector<cocos2d::Node*> currentBomb;
@@ -104,7 +106,7 @@ private:
 
 	/* Test class Player part   */
     Player * hero;      /* This is the player control by human  */
-	  Item * item;
+
 //    Map<Vec2, STATUS_AT*> status_map;
 
 };

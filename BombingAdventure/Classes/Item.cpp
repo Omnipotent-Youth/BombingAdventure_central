@@ -6,17 +6,31 @@
 
 Item::Item() {
     /* Default attributes of a new item     */
-    item_id = floor(CCRANDOM_0_1() * sizeof(items));
+    is_picked = false;
+//    item_id = floor(CCRANDOM_0_1() * sizeof(items));
+    item_id = 1;
     /* Default view of a new item         */
-    bind_sprite(Sprite::create("item_0.png"));
+    bind_sprite(Sprite::create("Item_1.png"));
     this->setAnchorPoint(Vec2(0.5,0.5));
 }
 Item::~Item() {
     /* Not yet  */
 }
 bool Item::init() {
+    /* Enable update    */
+    this->scheduleUpdate();
     return true;
 }
 int Item::get_item_id() {
     return item_id;
+}
+void Item::update(float delta) {
+    if (get_sprite() == NULL) {
+        return;
+    }
+    if (is_picked) {
+        this->removeAllChildren();
+        this->removeFromParent();
+        log("Item is removed");
+    }
 }
