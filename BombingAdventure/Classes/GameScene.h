@@ -7,7 +7,9 @@
 #include "Monster.h"
 #include "Item.h"
 
-//#include "Monster.h"
+const cocos2d::Size TILE_SIZE(40, 40);
+const cocos2d::Size MAP_SIZE(24, 16);
+
 
 class GameScene : public cocos2d::Layer
 {
@@ -43,6 +45,8 @@ public:
 	 */
 	void bomb_explode();
 
+	Vector<Bomb*> get_all_bomb();
+
 	bool isOutOfMap(cocos2d::Vec2 pos);
 
 	bool collideWithBrick(cocos2d::Vec2 targetPos);
@@ -63,19 +67,19 @@ public:
 	 * 
 	 * See the illustration:
 	 *
-	 *		*-----*-----*-----*-----*---------->  x-axis (tile)
-	 *		|	*B|     |     |     |
-	 *		|     |		|	  |		|
+	 *	    *-----*-----*-----*-----*---------->  x-axis (tile)
+	 *      |   *B|     |     |     |
+	 *      |     |		|	  |		|
 	 *      *-----*-----*-----*-----*
-	 *		|	  |		|	  |		|
-	 *		|	  |		| *A  |		|
-	 *		*-----*-----*-----*-----*
-	 *		|	  |		|     |		|
-	 *		|	  |		|	  |		|
-	 *		*-----*-----*-----*-----*
-	 *		|	
-	 *		|
-	 *		v
+	 *      |     |	    |     |     |
+	 *      |     |     | *A  |     |
+	 *      *-----*-----*-----*-----*
+	 *      |     |     |     |     |
+	 *      |     |     |     |	    |
+	 *      *-----*-----*-----*-----*
+	 *      |
+	 *      |
+	 *      v
 	 *		y-axis (tile)
 	 *
 	 *		In this diagram, A and B have position coordinates (90, 50) and (30, 110)
@@ -89,7 +93,7 @@ public:
 //	Item * speed_up_item;
 private:
 
-	Vector<cocos2d::Node*> currentBomb;
+	Vector<Bomb*> currentBomb;
 	cocos2d::TMXTiledMap * map;		/* the tile map for Bombing Adventure game */
 	cocos2d::TMXLayer * collidable;
 

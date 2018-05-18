@@ -2,6 +2,7 @@
 // Created by Brando Zhang on 2018/5/4.
 //
 
+#include "GameScene.h"
 #include "Player.h"
 
 USING_NS_CC;
@@ -50,17 +51,22 @@ int Player::get_num_available_bombs() {
     if (get_sprite() == NULL) return -1;
     return num_max_available_bombs - num_present_bombs;
 }
-void Player::set_bomb() {
-    if (get_sprite() == NULL) return;   /* Avoid strange things happened :) */
+Bomb* Player::set_bomb() {
+    if (get_sprite() == NULL) return NULL;
     Bomb * bomb = Bomb::create();
-    bomb->setPosition(this->getPosition());
-    this->getParent()->addChild(bomb);
-    
+	
+	Vec2 player_tile_coord = tileCoordFromPosition(Vec2(this->getPosition().x, this->getPosition().y - this->getContentSize().height / 3));
+
+	bomb->setPosition(Vec2(player_tile_coord.x*TILE_SIZE.width + TILE_SIZE.width / 2,
+		(MAP_SIZE.height - player_tile_coord.y)*TILE_SIZE.height - TILE_SIZE.height / 2));
+
     ++(this->num_present_bombs);
 
     bomb->startCounting(2.5f);
 
-    --(this->num_present_bombs);
+	--(this->num_present_bombs);
+	
+	return bomb;
 }
 void Player::pick_item(Item & item) {
     if (get_sprite() == NULL) return;   /* Avoid strange things happened :) */
