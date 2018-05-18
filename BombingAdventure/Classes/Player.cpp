@@ -2,6 +2,7 @@
 // Created by Brando Zhang on 2018/5/4.
 //
 
+#include "GameScene.h"
 #include "Player.h"
 #include "Bomb.h"
 USING_NS_CC;
@@ -41,16 +42,21 @@ int Player::get_HP() {
 int Player::get_num_available_bombs() {
     return num_max_available_bombs - num_present_bombs;
 }
-void Player::set_bomb() {
+Bomb* Player::set_bomb() {
     Bomb * bomb = Bomb::create();
-    bomb->setPosition(this->getPosition());
-    this->getParent()->addChild(bomb);
-    
+	
+	Vec2 player_tile_coord = tileCoordFromPosition(Vec2(this->getPosition().x, this->getPosition().y - this->getContentSize().height / 3));
+
+	bomb->setPosition(Vec2(player_tile_coord.x*TILE_SIZE.width + TILE_SIZE.width / 2,
+		(MAP_SIZE.height - player_tile_coord.y)*TILE_SIZE.height - TILE_SIZE.height / 2));
+
     ++(this->num_present_bombs);
 
     bomb->startCounting(2.5f);
 
-    --(this->num_present_bombs);
+	--(this->num_present_bombs);
+	
+	return bomb;
 }
 
 void Player::set_moving_speed(float new_speed) {

@@ -31,6 +31,5 @@ void Bomb::startCounting(float time) {
     endTime = time;
     currentTime = 0;
     isCounting = true;
-
 }
 

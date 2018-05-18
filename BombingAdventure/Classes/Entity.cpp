@@ -3,6 +3,7 @@
 //
 
 #include "Entity.h"
+#include "GameScene.h"
 
 Entity::Entity() {
     entity_sprite = NULL;
@@ -20,6 +21,12 @@ void Entity::bind_sprite(Sprite *sprite) {
     this->addChild(entity_sprite);
 }
 const Size& Entity::getContentSize() {
-    return this->get_sprite()->getContentSize();
+	return this->get_sprite()->getContentSize();
+}
 
+Vec2 Entity::tileCoordFromPosition(Vec2 position)
+{
+	int x = position.x / TILE_SIZE.width;
+	int y = ((MAP_SIZE.height * TILE_SIZE.height) - position.y) / TILE_SIZE.height;
+	return Vec2(x, y);
 }

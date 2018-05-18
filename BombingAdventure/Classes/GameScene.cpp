@@ -49,12 +49,13 @@ bool GameScene::init() {
 	 * are 24 * 16 tiles totally in the tile map.
 	 */
 	map = TMXTiledMap::create("map/map1.tmx");
-	
+
 	// set the anchor point and position of the map
 	map->setAnchorPoint(Vec2(0.5, 0.5));
 	map->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	// add the map into the scene
-	this->addChild(map, 0, 100);
+	this->addChild(map, 1, 100);
+	map->getLayer("background")->setGlobalZOrder(-1);
 
 	// "destructable" layer, indicating the tiles which can be blown up by bubbles
 	TMXLayer * destructable = map->getLayer("destructable");
@@ -76,7 +77,7 @@ bool GameScene::init() {
     float y = spawnPoint["y"].asFloat();
     hero = Player::create();
     hero->setPosition(Vec2(x+20, y+70));
-    this->addChild(hero, 2, 200);
+    this->addChild(hero, 100, 200);
 
     /* Following are keyboard listener  */
 
@@ -114,8 +115,10 @@ bool GameScene::init() {
                 break;
             case EventKeyboard::KeyCode::KEY_SPACE:
                 if (hero->can_set_bomb()) {
-                    hero->set_bomb();
-                }
+                    Bomb *bomb = hero->set_bomb();
+					addChild(bomb);
+					bomb->setGlobalZOrder(0);
+				}
                 break;
         }
     };
@@ -163,10 +166,17 @@ void GameScene::update(float delta) {
 	position_y += y_movement * moving_speed;
 
 	makeMove(Vec2(position_x, position_y));
+
 }
 
 void GameScene::bomb_explode()
 {
+
+}
+
+Vector<Bomb*> GameScene::get_all_bomb()
+{
+	return this->currentBomb;
 }
 
 bool GameScene::isOutOfMap(Vec2 pos) 
@@ -241,7 +251,7 @@ void GameScene::makeMove(Vec2 position)
 				break;
 			}
 		case MOVE_DOWN:
-			targetPos.y -= figSize.height / 2 + 3;
+    		targetPos.y -= figSize.height / 2 + 3;
 			if (x_movement == MOVE_STOP) {
 				break;
 			}
