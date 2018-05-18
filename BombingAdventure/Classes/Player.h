@@ -37,7 +37,7 @@ public:
      * --------------------------
      * Set a bomb on the current position.
      */
-    void set_bomb();
+    Bomb* set_bomb();
 
     /* Method: pick_item
      * Usage: Player->pick_item(item);

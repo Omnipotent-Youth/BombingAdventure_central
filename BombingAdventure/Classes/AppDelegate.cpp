@@ -83,7 +83,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // create a scene. it's an autorelease object
     auto scene = HelloWorld::createScene();
 
-    // run
+	// run
     director->runWithScene(scene);
 
 	// background music preloaded
