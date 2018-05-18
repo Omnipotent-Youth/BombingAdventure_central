@@ -13,9 +13,9 @@
 USING_NS_CC;
 
 
-const int DEFAULT_HP = 3;
-const int DEFAULT_AVAILABLE_BOMBS = 3;
-const float DEFAULT_MOVING_SPEED = 3.0f;
+const int PLAYER_DEFAULT_HP = 3;
+const int PLAYER_DEFAULT_AVAILABLE_BOMBS = 3;
+const float PLAYER_DEFAULT_MOVING_SPEED = 3.0f;
 
 class Player : public Entity {
 public:
