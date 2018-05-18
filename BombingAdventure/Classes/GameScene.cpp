@@ -79,6 +79,7 @@ bool GameScene::init() {
     hero->setPosition(Vec2(x+20, y+70));
     this->addChild(hero, 100, 200);
 
+
     /* Following are keyboard listener  */
 
     /* Callback Function: game_keyboard_listener
@@ -153,7 +154,6 @@ bool GameScene::init() {
 }
 
 
-
 void GameScene::update(float delta) {
 
 	/* Following part updates the movement of player    */
@@ -166,6 +166,17 @@ void GameScene::update(float delta) {
 	position_y += y_movement * moving_speed;
 
 	makeMove(Vec2(position_x, position_y));
+
+    /* Test pick_item method    */
+    Item * speed_up_item = Item::create();
+    speed_up_item->setPosition(Vec2(500, 380));
+    this->addChild(speed_up_item);
+
+    auto item_position = tileCoordFromPosition(speed_up_item->getPosition());
+    auto hero_position = tileCoordFromPosition(hero->getPosition());
+    if (item_position == hero_position) {
+        hero->pick_item(*speed_up_item);
+    }
 
 }
 

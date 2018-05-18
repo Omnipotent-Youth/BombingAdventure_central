@@ -16,13 +16,15 @@ USING_NS_CC;
 const int PLAYER_DEFAULT_HP = 3;
 const int PLAYER_DEFAULT_AVAILABLE_BOMBS = 3;
 const float PLAYER_DEFAULT_MOVING_SPEED = 3.0f;
+const int PLAYER_MAX_HP = 10;
+const float PLAYER_MAX_MOVING_SPEED = 8.0f;
 
 class Player : public Entity {
 public:
     /*  Constructor */
     Player();
 
-    /*  Desructor   */
+    /*  Destructor   */
     ~Player();
 
     CREATE_FUNC(Player);
@@ -43,6 +45,13 @@ public:
      * Pick the item which can change the behavior of the player.
      */
     void pick_item(Item & item);
+
+    /* Method: injured
+     * Usage: Player->injured(deduct_HP);
+     * ----------------------------------
+     * Deducts the HP of the player by deduct_HP.
+     */
+    void injured(int deduct_HP = 1);
 
 //  View
 
@@ -84,7 +93,6 @@ public:
      */
     float get_moving_speed();
 
-
 protected:
     /*    Instance variables    */
 
@@ -96,7 +104,7 @@ protected:
 private:
 //    int cool_down_time;
 //    void set_HP(int new_HP);
-    void set_moving_speed(float new_speed);
+//    void set_moving_speed(float new_speed);
 //    void set_cool_down_time(int new_time);
 //
 //    Label* player_name = Label::create("Player1", "Arial", 24);
