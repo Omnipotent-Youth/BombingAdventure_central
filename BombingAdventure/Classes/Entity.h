@@ -8,6 +8,9 @@
 
 USING_NS_CC;
 
+/* Following are the attributes of entity    */
+const Size ENTITY_DEFAULT_SIZE = Size(40, 40);
+
 class Entity : public Node {
 public:
     Entity();

@@ -78,10 +78,7 @@ bool GameScene::init() {
     hero->setPosition(Vec2(x+20, y+70));
     this->addChild(hero, 2, 200);
 
-    /* Test item    */
-    item = Item::create();
-    item->setPosition(Vec2(300, 400));
-    this->addChild(item, 3, 200);
+
     /* Following are keyboard listener  */
 
     /* Callback Function: game_keyboard_listener
@@ -158,8 +155,6 @@ bool GameScene::init() {
 }
 
 
-
-
 void GameScene::update(float delta) {
 
 	/* Following part updates the movement of player    */
@@ -173,12 +168,16 @@ void GameScene::update(float delta) {
 
 	makeMove(Vec2(position_x, position_y));
 
-//    /* Test pick_item method    */
-//    auto item_position = item->getPosition();
-//    auto hero_position = hero->getPosition();
-//    if (item_position == hero_position) {
-//        hero->pick_item(*item);
-//    }
+    /* Test pick_item method    */
+    Item * speed_up_item = Item::create();
+    speed_up_item->setPosition(Vec2(500, 380));
+    this->addChild(speed_up_item);
+
+    auto item_position = tileCoordFromPosition(speed_up_item->getPosition());
+    auto hero_position = tileCoordFromPosition(hero->getPosition());
+    if (item_position == hero_position) {
+        hero->pick_item(*speed_up_item);
+    }
 }
 
 void GameScene::bomb_explode()

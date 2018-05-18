@@ -15,11 +15,13 @@ Sprite* Entity::get_sprite() {
     return this->entity_sprite;
 }
 void Entity::bind_sprite(Sprite *sprite) {
-
     this->entity_sprite = sprite;
     this->addChild(entity_sprite);
 }
 const Size& Entity::getContentSize() {
+    if (get_sprite() == NULL) {
+        return ENTITY_DEFAULT_SIZE;
+    }
     return this->get_sprite()->getContentSize();
 
 }
