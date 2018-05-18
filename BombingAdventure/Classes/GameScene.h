@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Player.h"
+#include "MonsterController.h"
 #include "Monster.h"
 #include "Item.h"
 
@@ -107,7 +108,6 @@ private:
 
 	/* Test class Player part   */
     Player * hero = NULL;      /* This is the player control by human  */
-
 //    Map<Vec2, STATUS_AT*> status_map;
 
 };

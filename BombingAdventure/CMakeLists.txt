@@ -162,9 +162,8 @@ set(GAME_SRC
         Classes/RulesScene.cpp
         Classes/Entity.cpp
         Classes/Player.cpp
-#        Classes/test_moving_scene.cpp
-#        Classes/Monster.cpp
-#        Classes/MonsterController.cpp
+        Classes/Monster.cpp
+        Classes/MonsterController.cpp
         Classes/Item.cpp
         Classes/Bomb.cpp
         )
@@ -178,9 +177,8 @@ set(GAME_HEADERS
         Classes/RulesScene.h
         Classes/Entity.h
         Classes/Player.h
-#        Classes/test_moving_scene.h
-#        Classes/Monster.h
-#        Classes/MonsterController.h
+        Classes/Monster.h
+        Classes/MonsterController.h
         Classes/Item.h
         Classes/Bomb.h
         )

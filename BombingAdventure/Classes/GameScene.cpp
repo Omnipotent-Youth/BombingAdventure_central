@@ -116,10 +116,6 @@ bool GameScene::init() {
             case EventKeyboard::KeyCode::KEY_SPACE:
                 if (hero->can_set_bomb()) {
                     hero->set_bomb();
-//                    status_map.insert(hero->getPosition(), BOMB);
-//                    log("The current position status is %d", status_map.at(hero->getPosition()));
-//                    status_map.insert(hero->getPosition(), EMPTY);
-//                    log("The current position status is %d", status_map.at(hero->getPosition()));
                 }
                 break;
         }
@@ -150,6 +146,10 @@ bool GameScene::init() {
 
     /* Enable update function of the GameScene, which controls the refreshments */
     this->scheduleUpdate();
+
+    /* Initialize a MonsterController   */
+    MonsterController * monster_controller = MonsterController::create();
+    this->addChild(monster_controller);
 
 	return true;
 }
