@@ -3,10 +3,8 @@
 //
 
 #include "Player.h"
-#include "Bomb.h"
+
 USING_NS_CC;
-
-
 
 Player::Player() {
     /* Default attributes of a new player   */
@@ -55,9 +53,6 @@ void Player::set_bomb() {
     --(this->num_present_bombs);
 }
 
-void Player::set_moving_speed(float new_speed) {
-    moving_speed = new_speed;
-}
 void Player::pick_item(Item & item) {
     int item_id = item.get_item_id();
     switch (item_id) {
@@ -65,15 +60,20 @@ void Player::pick_item(Item & item) {
             /* Not yet  */
             break;
         case Item::SPEED_UP:
-            this->set_moving_speed(++moving_speed);
+            if (moving_speed < PLAYER_MAX_MOVING_SPEED) {
+                this->moving_speed += ITEM_SPEED_UP_BY;
+            }
             break;
         case Item::HP_UP:
-            ++(this->HP);
+            if (HP < PLAYER_MAX_HP) {
+                this->HP += ITEM_CURE_BY;
+            }
             break;
         case Item::NUM_BOMBS_UP:
-            ++(this->num_max_available_bombs);
+            this->num_max_available_bombs += ITEM_ADD_BOMBS_BY;
             break;
     }
-    log("Pick item");
-//    item.removeFromParent();
+    log("Pick item.");
+    log("Now my speed is %f", moving_speed);
+    item.is_picked = true;
 }
