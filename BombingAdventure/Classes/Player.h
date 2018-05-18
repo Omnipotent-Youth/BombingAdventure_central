@@ -22,7 +22,7 @@ public:
     /*  Constructor */
     Player();
 
-    /*  Desructor   */
+    /*  Destructor   */
     ~Player();
 
     CREATE_FUNC(Player);
@@ -83,7 +83,6 @@ public:
      * Get the moving speed of the player.
      */
     float get_moving_speed();
-
 
 protected:
     /*    Instance variables    */

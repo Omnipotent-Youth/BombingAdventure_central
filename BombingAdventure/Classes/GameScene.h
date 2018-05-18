@@ -1,8 +1,11 @@
-﻿#ifndef GAMESCENE_H
+#ifndef GAMESCENE_H
 #define GAMESCENE_H
 
 #include "cocos2d.h"
 #include "Player.h"
+#include "Item.h"
+
+//#include "Monster.h"
 
 class GameScene : public cocos2d::Layer
 {
@@ -85,10 +88,24 @@ private:
 	Vector<cocos2d::Node*> currentBomb;
 	cocos2d::TMXTiledMap * map;		/* the tile map for Bombing Adventure game */
 	cocos2d::TMXLayer * collidable;
-//	cocos2d::Sprite * player;
+
+    enum STATUS_AT {
+        EMPTY,      /* Corresponding position is empty              */
+        ITEM,       /* There is an item at corresponding position   */
+        BOMB,       /* There is a bomb at corresponding position    */
+        BRICK,      /* Brick cannot be passed, but can be destroyed */
+        WALL        /* Wall cannot be passed or destroyed           */
+    };
+
+    /* This is the monsters in this scene   */
+//    Monster * monster1;
+//    Monster * monster2;
+//    Monster * monster3;
 
 	/* Test class Player part   */
-    Player * hero;      /* This is the player control by human */
+    Player * hero;      /* This is the player control by human  */
+	  Item * item;
+//    Map<Vec2, STATUS_AT*> status_map;
 
 };
 
