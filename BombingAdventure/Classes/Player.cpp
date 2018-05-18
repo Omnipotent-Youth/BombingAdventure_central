@@ -3,7 +3,10 @@
 //
 
 #include "Player.h"
+#include "Bomb.h"
 USING_NS_CC;
+
+
 
 Player::Player() {
     /* Default attributes of a new player   */
@@ -16,6 +19,7 @@ Player::Player() {
 //            bind_sprite(Sprite::create(player_file_name));
         bind_sprite(Sprite::create("player1_default.png"));
             this->setAnchorPoint(Vec2(0.5,0.5));
+			this->_contentSize = getContentSize();
 }
 Player::~Player() {
     /* Not yet  */
@@ -32,6 +36,7 @@ bool Player::is_alive() {
 float Player::get_moving_speed() {
     return moving_speed;
 }
+
 int Player::get_HP() {
     return HP;
 }
@@ -39,11 +44,17 @@ int Player::get_num_available_bombs() {
     return num_max_available_bombs - num_present_bombs;
 }
 void Player::set_bomb() {
-    Sprite* bomb = Sprite::create("blue_bomb.png");
+    Bomb * bomb = Bomb::create();
     bomb->setPosition(this->getPosition());
     this->getParent()->addChild(bomb);
+    
     ++(this->num_present_bombs);
+
+    bomb->startCounting(2.5f);
+
+    --(this->num_present_bombs);
 }
+
 void Player::set_moving_speed(float new_speed) {
     moving_speed = new_speed;
 }

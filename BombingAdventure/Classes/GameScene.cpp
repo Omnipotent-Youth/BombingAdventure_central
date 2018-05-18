@@ -10,9 +10,13 @@ const int MOVE_UP = 1;
 const int MOVE_DOWN = -1;
 const int MOVE_STOP = 0;
 
-/* Following variables mark the status of player   */
+/* Following variables mark the movement status of player   */
 int x_movement = MOVE_STOP;         /* Initiate with player stops   */
 int y_movement = MOVE_STOP;         /* Initiate with player stops   */
+
+/*
+ * Implementation Note: similar to HelloWorldScene::createScene().
+ */
 
 Scene * GameScene::createScene()
 {
@@ -22,31 +26,56 @@ Scene * GameScene::createScene()
 	return scene;
 }
 
+/*
+ * Implementation Note: initializer
+ * --------------------------------
+ * The initializer initiates the game map, the player sprite, and the keyboard event listener.
+ */
+
 bool GameScene::init() {
+	
+	// super-init first
 	if (!Layer::init()) {
 		return false;
 	}
-
+	// get visible size of the game window
 	auto visibleSize = Director::getInstance()->getVisibleSize();
+	// get the origin
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+	/* Create a tile map.
+	 * Note that the designed map has the same size as the game window:
+	 * 960 * 640, with each tile of size 40*40 (pixes). Therefore, there
+	 * are 24 * 16 tiles totally in the tile map.
+	 */
 	map = TMXTiledMap::create("map/map1.tmx");
+	
+	// set the anchor point and position of the map
 	map->setAnchorPoint(Vec2(0.5, 0.5));
-	map->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 - 40));
+	map->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	// add the map into the scene
 	this->addChild(map, 0, 100);
 
-	collidable = map->getLayer("collide");
-	collidable->setVisible(false);
+	// "destructable" layer, indicating the tiles which can be blown up by bubbles
+	TMXLayer * destructable = map->getLayer("destructable");
+	destructable->setVisible(false);					/* set it transparent*/
 
-
+	// object layer (probably useless)
 	TMXObjectGroup *group = map->getObjectGroup("object1");
+	
+	// get the spawn point and its coordinate
 	ValueMap spawnPoint = group->getObject("spawn");
+
+	/* Initiate the player sprite, set its position at the spawn point,
+	 * and add it into the game scene.
+	 */
+
 
     /* Create the hero  */
     float x = spawnPoint["x"].asFloat();
     float y = spawnPoint["y"].asFloat();
     hero = Player::create();
-    hero->setPosition(Vec2(x+20, y-50));
+    hero->setPosition(Vec2(x+20, y+70));
     this->addChild(hero, 2, 200);
 
     /* Test item    */
@@ -127,18 +156,22 @@ bool GameScene::init() {
 
 	return true;
 }
+
+
+
+
 void GameScene::update(float delta) {
 
-    /* Following part updates the movement of player    */
-    float position_x = hero->getPositionX();
-    float position_y = hero->getPositionY();
+	/* Following part updates the movement of player    */
+	float position_x = hero->getPositionX();
+	float position_y = hero->getPositionY();
 
-    float moving_speed = hero->get_moving_speed();
+	float moving_speed = hero->get_moving_speed();
 
-    position_x += x_movement * moving_speed;
-    position_y += y_movement * moving_speed;
+	position_x += x_movement * moving_speed;
+	position_y += y_movement * moving_speed;
 
-    hero->setPosition(position_x, position_y);
+	makeMove(Vec2(position_x, position_y));
 
 //    /* Test pick_item method    */
 //    auto item_position = item->getPosition();
@@ -148,24 +181,104 @@ void GameScene::update(float delta) {
 //    }
 }
 
-/*
-void GameScene::setPlayerPosition(Vec2 position)
+void GameScene::bomb_explode()
 {
-	Vec2 tileCoord = this->tileCoordFromPosition(position);
+}
 
-	int tileGid = collidable->getTileGIDAt(tileCoord);
+bool GameScene::isOutOfMap(Vec2 pos) 
+{	
+	float mapWidth = map->getMapSize().width * map->getTileSize().width;
+	float mapHeight = map->getMapSize().height * map->getTileSize().height;
 
-	if (tileGid > 0) {
-		auto prop = map->propertiesForGID(tileGid);
-		ValueMap propValueMap = prop.asValueMap();
+	if (pos.x <= 0 ||
+		pos.x >= mapWidth ||
+		pos.y <= 0 ||
+		pos.y >= mapHeight) return true;
+	return false;
+}
 
-		string _collision_ = propValueMap["collidable"].asString();
+bool GameScene::collideWithBrick(cocos2d::Vec2 targetPos)
+{
+	// get the tile coord of the target position
+	Vec2 tileCoord = tileCoordFromPosition(targetPos);
 
-		if (_collision_ == "true") {
-			return;
+	// tiles in the "bricks" layer are "collidable"
+	TMXLayer *collide = map->getLayer("bricks");
+
+	// get absolute GID of the tile
+	int tileGid = collide->getTileGIDAt(tileCoord);
+	// first GID of the "bricks" layer
+	int firstGid = collide->getTileSet()->_firstGid;
+	// get related GID of the tile
+	tileGid -= firstGid;
+	
+	// if GID >= 0, the tile is in the "brick" layer
+	if (tileGid >= 0) {
+		return true;
+	}
+	return false;
+}
+
+bool GameScene::collideWithBubble(cocos2d::Vec2 targetPos)
+{
+	return false;
+}
+
+void GameScene::makeMove(Vec2 position)
+{
+	Vec2 targetPos = position;
+
+	// correct the detection deviation caused by the sprite size
+	Size figSize = hero->getContentSize();
+
+	if (y_movement == MOVE_STOP) {
+		switch (x_movement) {
+		case MOVE_LEFT:
+			targetPos.x -= 1 * figSize.width / 3;
+			break;
+		case MOVE_RIGHT:
+			targetPos.x += 1 * figSize.width / 3;
+			break;
 		}
 	}
-	player->setPosition(position);
+	else {
+		switch (y_movement) {
+		case MOVE_UP:
+			if (x_movement == MOVE_STOP) {
+				break;
+			}
+			else {
+				if (x_movement == MOVE_LEFT) {
+					targetPos.x -= 1 * figSize.width / 3;
+				}
+				else {
+					targetPos.x += 1 * figSize.width / 3;
+				}
+				break;
+			}
+		case MOVE_DOWN:
+			targetPos.y -= figSize.height / 2 + 3;
+			if (x_movement == MOVE_STOP) {
+				break;
+			}
+			else {
+				if (x_movement == MOVE_LEFT) {
+					targetPos.x -= 1 * figSize.width / 3;
+				}
+				else {
+					targetPos.x += 1 * figSize.width / 3;
+				}
+				break;
+			}
+		}
+	}
+
+	// if the target position is out of bound
+	if (isOutOfMap(targetPos)) return;
+
+	if (collideWithBrick(targetPos) || collideWithBubble(targetPos)) return;
+
+	hero->setPosition(position);
 }
 
 Vec2 GameScene::tileCoordFromPosition(Vec2 position)
@@ -174,39 +287,3 @@ Vec2 GameScene::tileCoordFromPosition(Vec2 position)
 	int y = ((map->getMapSize().height * map->getTileSize().height) - position.y) / map->getTileSize().height;
 	return Vec2(x, y);
 }
-
-bool GameScene::onTouchBegan(Touch * touch, Event * event)
-{
-	return true;
-}
-
-void GameScene::onTouchMoved(Touch * touch, Event * event)
-{
-
-}
-
-void GameScene::onTouchEnded(Touch * touch, Event * event)
-{
-	Vec2 touchLocation = touch->getLocation();
-	Vec2 playerPos = player->getPosition();
-	Vec2 diff(touchLocation - playerPos);
-
-	if (abs(diff.x) > abs(diff.y)) {
-		if (diff.x > 0) {
-			playerPos.x += map->getTileSize().width;
-			player->runAction(MoveTo::create(.30f, playerPos));
-		} else {
-			playerPos.x -= map->getTileSize().width;
-			player->runAction(MoveTo::create(.30f, playerPos));
-		}
-	} else {
-		if (diff.y > 0) {
-			playerPos.y += map->getTileSize().height;
-		} else {
-			playerPos.y -= map->getTileSize().height;
-		}
-	}
-	this->setPlayerPosition(playerPos);
-}
-
-*/

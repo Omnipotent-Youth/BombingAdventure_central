@@ -166,6 +166,7 @@ set(GAME_SRC
 #        Classes/Monster.cpp
 #        Classes/MonsterController.cpp
         Classes/Item.cpp
+        Classes/Bomb.cpp
         )
 
 
@@ -175,12 +176,13 @@ set(GAME_HEADERS
         Classes/HelloWorldScene.h
         Classes/GameScene.h
         Classes/RulesScene.h
-        Classes/Entity.h
+	Classes/Entity.h
         Classes/Player.h
 #        Classes/test_moving_scene.h
 #        Classes/Monster.h
 #        Classes/MonsterController.h
         Classes/Item.h
+        Classes/Bomb.h
         )
 
 # add the executable

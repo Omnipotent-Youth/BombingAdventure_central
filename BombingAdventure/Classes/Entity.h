@@ -22,6 +22,7 @@ public:
      * Get the size of the Entity, which equals to its sprite.
      */
     virtual const Size & getContentSize();
+
 private:
     Sprite* entity_sprite;                  /* Every entity has at least one sprite */
 };
