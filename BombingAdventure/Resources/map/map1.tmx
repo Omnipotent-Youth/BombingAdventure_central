@@ -7,6 +7,7 @@
   <image source="mapItems/tiles.png" width="320" height="80"/>
  </tileset>
  <tileset firstgid="24" source="mapItems/collide.tsx"/>
+ <tileset firstgid="24" source="mapItems/destructable.tsx"/>
  <layer id="14" name="background" width="24" height="16">
   <data encoding="base64" compression="zlib">
    eJxjZGBgYIRiZiBmg9KMJGJ0vUxQjE/NUDOfhUp4uIbPqPmj5lNi/lDJX0zDyHwAIFsDDA==
@@ -17,17 +18,17 @@
    <property name="collidable" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJytlIEKwyAMRPMJ1k79XT99ul7occRO2AQ5I03yTDXJzA67RrZ7NOy/RMfsY91Zx7fd7hif9dxPY86Y55iVcmTYCTFZE2Ky1itO99jTPmG7Xwv4M7hZM7hZlb9RfuX3M9SA3YeeoRK78ru/8/oZIn7Ux1b8mWzKv+SXujO/RfVX/oP2ODarr7/Z6kO5rED1O63/SjUHx9zlV+5/8O+w69vc4X+q79P/ifj9/kXvi+t7yMT5wv7Q6P56jKg/FKxZC3xZo/7guVf84AvvivYf9lH+itjR+2qBNvCq6vvy/egOcP1/7c9v4VBHZQ==
+   eJytlIEKwyAMRPMJ1k79XT99ul7occRO2AQ5IzV5pibJzA67RrZ7NOy/RMfsY91Zx7fdbh+f9dxPY06f55iVYmTYCT5ZE3yy1stPd9/TPmH7uRbwZ3CzZnCzKn+j+Mrvd6gBuw+9QyV25ffzzut3iPiRH1vxZ7Ip/pJf8s78FuVf+Q/aY9+svv5m6xmKZQWq32n+V6ox2Ocuv3L/g3+HXWtzh/8pv0//J+L39xfVF+f3kIn7hf2h0ft1H1F/KFizFpxljfqDx17xgy/qP8a1m+SNK3+F76i+WqANvKpaX74fvQHO/6/9+Q3wUEd1
   </data>
  </layer>
  <layer id="16" name="tops" width="24" height="16">
   <data encoding="base64" compression="zlib">
-   eJy1lMESwyAIRDlWYvSX/fRqsyR0i6mH1hlmQybgg6AqIlu3IsdS2PAf3RJpt9afm9f+bVOYHLFtg5+QtyKvkJ9JR0xGbHY5bQ2/uv2V+K2GErDb4hoK7eP5Ld54rYaIH/0R5q/Irc53+0/5qe+eX4L+n8v4E/XOckfv9Ma/ix2cO1TpO+7/TIVifc5Vfub+Bf8Ke6KYFX7mWOGf/RObv+h8+f4mMlffOZ/Y5+Xb/FqO6H7Y8ex1R6zX6H6w+Z3xO76v9w/16Y2/IHd0vmqgFbysfD/Y+2gGfP8zabr6eir13/7XR23/WE9EmTeo
+   eJy1VMsOwzAI47ikafLL+fSlK04tjz4OGxJyqAoYlyab2TK82m7ZfYtfw5Pg8D7OnXG827O77bl98Th53eZ1TeIiuOUUzy1UE7bFjfpn4Y8ZasAdpjNU6cP8kQ++mCHi7/qY8m9eO1NM/U/5i+7M3wL9p4F/Eu1QmxHnu1hzqJetjvqe6n+G2oNrPuWvvH/B/wn3JDlP+F/pe/V9Iv7Yv+j/Yn2TOM0399N7fWLsL2pE98PqZ8bVcxmj+wH7e8af+N3eP5yj/KvXjv6vFmBzvop6P+B5tAOsfxFMh64TRX98r6/Z/mFvBGA35A==
   </data>
  </layer>
  <layer id="20" name="destructable" width="24" height="16">
   <data encoding="base64" compression="zlib">
-   eJzNlFEKgDAMQ3uM3v+kfoggIS+zgrKBjNo2fXarXVVd57r2Evu+u3eU0+B3MenRPNX6k59iWvwrNuJXnQk/9fZL/qTtuMgmvaQ9vT9varh6yb8Df+pvOh/STrOS7hLNLDGR7XjpG4gt8T/pf6qta3VGk5w0g9P/g4s9APGqEUE=
+   eJxjYBgFo2AUDASQIBIPBUCsmyXQaFLMx8ZGtx8XH5eZpIY/ue4nBMgxD90tEjjEcOkBYQAh6wQh
   </data>
  </layer>
  <objectgroup id="4" name="object1">

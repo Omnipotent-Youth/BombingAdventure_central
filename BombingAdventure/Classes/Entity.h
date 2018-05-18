@@ -26,6 +26,8 @@ public:
      */
     virtual const Size & getContentSize();
 
+	cocos2d::Vec2 tileCoordFromPosition(cocos2d::Vec2 position);
+
 private:
     Sprite* entity_sprite;                  /* Every entity has at least one sprite */
 };
