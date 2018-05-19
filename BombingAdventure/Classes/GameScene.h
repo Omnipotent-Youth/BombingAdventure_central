@@ -27,32 +27,20 @@ public:
 	 * Method:bomb_explode
 	 * Usage: bomb_explode();
 	 * ---------------------
-	 * psuedo code:
-	 * Bomb *Bomb= currentBomb.pop();
-	 * bombPower = Bomb->power;
-	 * bombPos = Bomb->position;
-	 * Size bombTileCoord = tileCoordFromPosition(bombPos);
-	 * for (int i = bombTileCoord.x; i <= bombTileCoord+2*bombPower; i++){
-	 *		GID = getGID(i, bombTileCoord.y);
-	 *		if GID.isInBricksLayer() && ！dectructable : (是砖块，但是炸不了.需要挡住此砖左边/右边的爆炸效果)
-	 *		if GID.isDectructable(): removeTile()... (移除砖块，移除可爆炸块，遮挡爆炸效果)
-	 * }
-	 * for (int j = bombTileCoord.y; j <= bombTileCoord+2*bombPower; j++){
-	 *		same operations...
-	 * }
 	 *
-	 * 这个函数实现：判定炸弹爆炸的有效范围（是否被砖块挡住），把范围内的可炸(dectructable)砖块炸掉。
-	 * 炸弹炸到人的判定可以再写一个函数？
 	 */
 	void bomb_explode(Bomb *bomb);
 
 	bool isOutOfMap(cocos2d::Vec2 pos);
 
+	bool here_can_set(Vec2 pos);
+
 	bool collideWithBrick(cocos2d::Vec2 targetPos);
 
-	bool collideWithBubble(cocos2d::Vec2 targetPos);
+	bool collideWithBubble(cocos2d::Vec2 playerPos, cocos2d::Vec2 targetPos);
 
 	void makeMove(cocos2d::Vec2 position);
+
 
 	/* macro for creating layer */
 	CREATE_FUNC(GameScene);
@@ -94,6 +82,7 @@ private:
 
 	Vector<Bomb*> current_bombs;
 	cocos2d::TMXTiledMap * map;			/* the tile map for Bombing Adventure game */
+	cocos2d::TMXLayer * bricks;
 	cocos2d::TMXLayer * destructable;	/* destructable layer                      */
 
     enum STATUS_AT {
