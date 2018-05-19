@@ -3,10 +3,10 @@
 
 #include "cocos2d.h"
 #include "Player.h"
-
-#include "Bomb.h"
+#include "MonsterController.h"
+#include "Monster.h"
+#include "ItemController.h"
 #include "Item.h"
-//#include "Monster.h"
 
 const cocos2d::Size TILE_SIZE(40, 40);
 const cocos2d::Size MAP_SIZE(24, 16);
@@ -76,7 +76,7 @@ public:
 	 *      |     |     |     |     |
 	 *      |     |     |     |	    |
 	 *      *-----*-----*-----*-----*
-	 *      |	
+	 *      |
 	 *      |
 	 *      v
 	 *		y-axis (tile)
@@ -110,8 +110,7 @@ private:
 //    Monster * monster3;
 
 	/* Test class Player part   */
-    Player * hero;      /* This is the player control by human  */
-
+    Player * hero = NULL;      /* This is the player control by human  */
 //    Map<Vec2, STATUS_AT*> status_map;
 
 };
