@@ -42,7 +42,12 @@ float Player::get_moving_speed() {
     if (get_sprite() == NULL) return -1;
     return moving_speed;
 }
-
+int Player::get_x_movement() {
+    return x_movement;
+}
+int Player::get_y_movement() {
+    return y_movement;
+}
 int Player::get_HP() {
     if (get_sprite() == NULL) return -1;
     return HP;
