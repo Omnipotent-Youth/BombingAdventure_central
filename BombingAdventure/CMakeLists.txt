@@ -166,7 +166,8 @@ set(GAME_SRC
         Classes/MonsterController.cpp
         Classes/Item.cpp
         Classes/Bomb.cpp
-        Classes/ItemController.cpp)
+        Classes/ItemController.cpp
+        )
 
 
 set(GAME_HEADERS
@@ -181,7 +182,8 @@ set(GAME_HEADERS
         Classes/MonsterController.h
         Classes/Item.h
         Classes/Bomb.h
-        Classes/ItemController.h)
+        Classes/ItemController.h
+        )
 
 # add the executable
 if(ANDROID)
