@@ -30,7 +30,11 @@ void Entity::bind_sprite(Sprite *sprite) {
 }
 void Entity::reset_position() {
     if(get_sprite() != NULL) {
-        setPosition(Vec2(CCRANDOM_0_1() * 960, CCRANDOM_0_1() * 640));
+        /* Generate a position in unit Tile     */
+        int target_tile_x = (int) floor(CCRANDOM_0_1() * MAP_SIZE.width);
+        int target_tile_y = (int) floor(CCRANDOM_0_1() * MAP_SIZE.height);
+        /* Set to the position in unit pixel, did not add robust part   */
+        setPosition(Vec2(target_tile_x * TILE_SIZE.width + TILE_SIZE.width / 2, target_tile_y * TILE_SIZE.height + TILE_SIZE.height / 2));
     }
 }
 Vec2 Entity::tileCoordFromPosition(Vec2 position)
