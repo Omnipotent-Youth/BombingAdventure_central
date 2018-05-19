@@ -19,11 +19,16 @@ void Bomb::bombUpdate(float delta) {
 
     currentTime += delta;
 
-    if (currentTime >= endTime) {
-        isCounting = false;
+	if (currentTime >= endTime && currentTime < endTime + 0.5f) {
+		exploded = true;
+		removeAllChildren();
+	}
+
+	if (currentTime >= endTime + 0.5f) {
+		isCounting = false;
+		removeAllChildren();
         this->unschedule(schedule_selector(Bomb::bombUpdate));
-        this->removeAllChildren();
-        this->removeFromParent();
+        removeFromParent();
     }
 }
 
@@ -31,6 +36,7 @@ void Bomb::startCounting(float time) {
     endTime = time;
     currentTime = 0;
     isCounting = true;
+	exploded = false;
 }
 
 int Bomb::getPower()
@@ -38,8 +44,7 @@ int Bomb::getPower()
 	return power;
 }
 
-bool Bomb::bombIsCounting()
+bool Bomb::bombIsExploded()
 {
-	return isCounting;
+	return exploded;
 }
-

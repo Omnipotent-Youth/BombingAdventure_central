@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "HelloWorldScene.h"
 
 USING_NS_CC;
 
@@ -66,7 +67,7 @@ bool GameScene::init() {
     float x = spawnPoint["x"].asFloat();
     float y = spawnPoint["y"].asFloat();
     hero = Player::create();
-    hero->setPosition(Vec2(x+20, y+70));
+	hero->setPosition(Vec2(x+20, y+70));
     this->addChild(hero, 100, 200);
 
 
@@ -158,6 +159,10 @@ bool GameScene::init() {
 
 void GameScene::update(float delta) {
 
+	if (!hero->is_alive()) {
+		game_over();
+	}
+	
 	/* Following part updates the movement of player    */
 	float position_x = hero->getPositionX();
 	float position_y = hero->getPositionY();
@@ -170,7 +175,7 @@ void GameScene::update(float delta) {
 	makeMove(Vec2(position_x, position_y), hero);
 
 	/* Bombs blow up destructable bricks */
-	while (!current_bombs.empty() && !current_bombs.front()->bombIsCounting()) {
+	while (!current_bombs.empty() && current_bombs.front()->bombIsExploded()) {
 		Bomb * bomb = current_bombs.front();
 		bomb_explode(bomb);
 		current_bombs.erase(0);
@@ -190,7 +195,6 @@ void GameScene::bomb_explode(Bomb *bomb)
 	int firstGid_of_brk = bricks->getTileSet()->_firstGid;
 
 	for (; l_range < power && bomb_tile_coord.x - l_range - 1 >= 0; l_range++) {
-		
 		int GID_brk = bricks->getTileGIDAt(Vec2(bomb_tile_coord.x - l_range - 1, bomb_tile_coord.y));
 		if (GID_brk - firstGid_of_brk >= 0){
 			int GID_des = destructable->getTileGIDAt(Vec2(bomb_tile_coord.x - l_range - 1, bomb_tile_coord.y));
@@ -248,12 +252,59 @@ void GameScene::bomb_explode(Bomb *bomb)
 		}
 	}
 
+	hero->bomb_vs_man(bomb_tile_coord, l_range, r_range, u_range, d_range);
+
 	/* Now we have l_range, r_value, u_value, d_value, which indicate the explosion
 	 * range of the bomb in the four directions. What you need to do now is to 
 	 * display the animation effect of bombs.
 	 * Please add your code here...
 	 */
 
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Explosion.plist");
+	Sprite *wave = Sprite::createWithSpriteFrameName("ExplosionCenter_01.png");
+	bomb->addChild(wave);
+	wave->setPosition(Vec2(TILE_SIZE.width/2, TILE_SIZE.height/2));
+
+	for (int i = 0; i < l_range; i++) {
+		Sprite *l_wave;
+		if (i = l_range - 1) {
+			l_wave = Sprite::createWithSpriteFrameName("ExplosionLEFT_01.png");
+		} else {
+			l_wave = Sprite::createWithSpriteFrameName("ExplosionLEFT_02.png");
+		}
+		bomb->addChild(l_wave);
+		l_wave->setPosition(Vec2((-i - 1) * TILE_SIZE.width + TILE_SIZE.width / 2, TILE_SIZE.height / 2));
+	}
+	for (int i = 0; i < r_range; i++) {
+		Sprite *r_wave;
+		if (i = r_range - 1) {
+			r_wave = Sprite::createWithSpriteFrameName("ExplosionRIGHT_01.png");
+		} else {
+			r_wave = Sprite::createWithSpriteFrameName("ExplosionRIGHT_02.png");
+		}
+		bomb->addChild(r_wave);
+		r_wave->setPosition(Vec2((i + 1) * TILE_SIZE.width + TILE_SIZE.width / 2, TILE_SIZE.height / 2));
+	}
+	for (int i = 0; i < d_range; i++) {
+		Sprite *d_wave;
+		if (i = d_range - 1) {
+			d_wave = Sprite::createWithSpriteFrameName("ExplosionDOWN_01.png");
+		} else {
+			d_wave = Sprite::createWithSpriteFrameName("ExplosionDOWN_02.png");
+		}	
+		bomb->addChild(d_wave);
+		d_wave->setPosition(Vec2(TILE_SIZE.width / 2, (- i - 1) * TILE_SIZE.height + TILE_SIZE.height / 2));
+	}
+	for (int i = 0; i < u_range; i++) {
+		Sprite *u_wave;
+		if (i = u_range - 1) {
+			u_wave = Sprite::createWithSpriteFrameName("ExplosionUP_01.png");
+		} else {
+			u_wave = Sprite::createWithSpriteFrameName("ExplosionUP_02.png");
+		}
+		u_wave->setPosition(Vec2(TILE_SIZE.width / 2, (i + 1) * TILE_SIZE.height + TILE_SIZE.height / 2));
+		bomb->addChild(u_wave);
+	}
 }
 
 bool GameScene::isOutOfMap(Vec2 pos) 
@@ -301,7 +352,7 @@ bool GameScene::collideWithBrick(cocos2d::Vec2 targetPos)
 bool GameScene::collideWithBubble(Vec2 playerPos, Vec2 targetPos)
 {
 	Vec2 target_tileCoord = tileCoordFromPosition(targetPos);
-	Vec2 now_tileCoord = tileCoordFromPosition(playerPos);
+	Vec2 now_tileCoord = tileCoordFromPosition(Vec2(playerPos.x, playerPos.y));
 
 	if (now_tileCoord == target_tileCoord) return false;
 
@@ -346,4 +397,9 @@ Vec2 GameScene::tileCoordFromPosition(Vec2 position)
 	int x = position.x / map->getTileSize().width;
 	int y = ((map->getMapSize().height * map->getTileSize().height) - position.y) / map->getTileSize().height;
 	return Vec2(x, y);
+}
+
+void GameScene::game_over()
+{
+	Director::getInstance()->replaceScene(CCTransitionMoveInR::create(0.4f, HelloWorld::createScene()));
 }
