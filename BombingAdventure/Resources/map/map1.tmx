@@ -28,7 +28,7 @@
  </layer>
  <layer id="20" name="destructable" width="24" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUDASQIBIPBUCsmyXQaFLMx8ZGtx8XH5eZpIY/ue4nBMgxD90tEjjEcOkBYQAh6wQh
+   eJzNk4EKwCAIBf0M//9LxxiDId5Vg8WCCDOfl2VGRMY17jWK/Vy7PYpJ8HdnbNa4qrWTn85k8Y/YiH8mH/FTbb/kN+2Oi2zSM+3V//MmR5fP/H/gt/ra+5C29Yr9JepZYiK746U7EJvxz9TfctcxeqOVGOtBq+VMzDkPiEoRKQ==
   </data>
  </layer>
  <objectgroup id="4" name="object1">

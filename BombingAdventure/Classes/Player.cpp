@@ -60,6 +60,9 @@ Bomb* Player::set_bomb() {
 	bomb->setPosition(Vec2(player_tile_coord.x*TILE_SIZE.width + TILE_SIZE.width / 2,
 		(MAP_SIZE.height - player_tile_coord.y)*TILE_SIZE.height - TILE_SIZE.height / 2));
 
+	this->getParent()->addChild(bomb);
+	bomb->setGlobalZOrder(0);
+
     ++(this->num_present_bombs);
 
     bomb->startCounting(2.5f);

@@ -33,3 +33,13 @@ void Bomb::startCounting(float time) {
     isCounting = true;
 }
 
+int Bomb::getPower()
+{
+	return power;
+}
+
+bool Bomb::bombIsCounting()
+{
+	return isCounting;
+}
+
