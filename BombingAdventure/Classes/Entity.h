@@ -17,15 +17,7 @@ public:
     ~Entity();
     Sprite* get_sprite();                   /* Get the sprite of this entity        */
     void bind_sprite(Sprite* sprite);       /* Bind to sprite object                */
-    Point get_position();                   /* Return the position of this entity   */
-
-    /* Method Overriding: getContentSize
-     * Usage: Size size = Entity->getContentSize();
-     * -------------------------------------------------------
-     * Get the size of the Entity, which equals to its sprite.
-     */
-    virtual const Size & getContentSize();
-
+    virtual void reset_position();          /* Reset the position of this entity    */
 	cocos2d::Vec2 tileCoordFromPosition(cocos2d::Vec2 position);
 
 private:
