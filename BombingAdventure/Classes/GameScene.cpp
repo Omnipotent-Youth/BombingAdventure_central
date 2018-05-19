@@ -58,7 +58,7 @@ bool GameScene::init() {
 	map->getLayer("background")->setGlobalZOrder(-1);
 
 	// "destructable" layer, indicating the tiles which can be blown up by bubbles
-	TMXLayer * destructable = map->getLayer("destructable");
+	destructable = map->getLayer("destructable");
 	destructable->setVisible(false);					/* set it transparent*/
 
 	// object layer (probably useless)
@@ -117,8 +117,7 @@ bool GameScene::init() {
             case EventKeyboard::KeyCode::KEY_SPACE:
                 if (hero->can_set_bomb()) {
                     Bomb *bomb = hero->set_bomb();
-					addChild(bomb);
-					bomb->setGlobalZOrder(0);
+					current_bombs.pushBack(bomb);
 				}
                 break;
         }
@@ -167,6 +166,13 @@ void GameScene::update(float delta) {
 
 	makeMove(Vec2(position_x, position_y));
 
+	/* Bombs blow up destructable bricks */
+	while (!current_bombs.empty() && !current_bombs.front()->bombIsCounting()) {
+		Bomb * bomb = current_bombs.front();
+		bomb_explode(bomb);
+		current_bombs.erase(0);
+	}
+
     /* Test pick_item method    */
     Item * speed_up_item = Item::create();
     speed_up_item->setPosition(Vec2(500, 380));
@@ -180,14 +186,58 @@ void GameScene::update(float delta) {
 
 }
 
-void GameScene::bomb_explode()
+void GameScene::bomb_explode(Bomb *bomb)
 {
+	int power = bomb->getPower();
+	Vec2 bomb_tile_coord = tileCoordFromPosition(bomb->getPosition());
+	int firstGid = destructable->getTileSet()->_firstGid;
 
-}
-
-Vector<Bomb*> GameScene::get_all_bomb()
-{
-	return this->currentBomb;
+	int i = 0;
+	for (; i < power && bomb_tile_coord.x - i - 1 >= 0; i++) {
+		int GID = destructable->getTileGIDAt(Vec2(bomb_tile_coord.x - i - 1, bomb_tile_coord.y));
+		if (GID - firstGid >= 0) {
+			map->getLayer("bricks")->removeTileAt(Vec2(bomb_tile_coord.x - i - 1, bomb_tile_coord.y));
+			if (bomb_tile_coord.y > 0) {
+				map->getLayer("tops")->removeTileAt(Vec2(bomb_tile_coord.x - i - 1, bomb_tile_coord.y - 1));
+			}
+				destructable->removeTileAt(Vec2(bomb_tile_coord.x - i - 1, bomb_tile_coord.y));
+			break;
+		}
+	}
+	i = 0;
+	for (; i < power && bomb_tile_coord.x + i + 1 < MAP_SIZE.width; i++) {
+		int GID = destructable->getTileGIDAt(Vec2(bomb_tile_coord.x + i + 1, bomb_tile_coord.y));
+		if (GID - firstGid >= 0) {
+			map->getLayer("bricks")->removeTileAt(Vec2(bomb_tile_coord.x + i + 1, bomb_tile_coord.y));
+			if (bomb_tile_coord.y > 0) {
+				map->getLayer("tops")->removeTileAt(Vec2(bomb_tile_coord.x + i + 1, bomb_tile_coord.y - 1));
+			}
+				destructable->removeTileAt(Vec2(bomb_tile_coord.x + i + 1, bomb_tile_coord.y));
+			break;
+		}
+	}
+	int j = 0;
+	for (; j < power && bomb_tile_coord.y + j + 1 < MAP_SIZE.height; j++) {
+		int GID = destructable->getTileGIDAt(Vec2(bomb_tile_coord.x, bomb_tile_coord.y + j + 1));
+		if (GID - firstGid >= 0) {
+			map->getLayer("bricks")->removeTileAt(Vec2(bomb_tile_coord.x, bomb_tile_coord.y + j + 1));
+			map->getLayer("tops")->removeTileAt(Vec2(bomb_tile_coord.x, bomb_tile_coord.y + j));
+			destructable->removeTileAt(Vec2(bomb_tile_coord.x, bomb_tile_coord.y + j + 1));
+			break;
+		}
+	}
+	j = 0;
+	for (; j < power && bomb_tile_coord.y - j - 1 >= 0; j++) {
+		int GID = destructable->getTileGIDAt(Vec2(bomb_tile_coord.x, bomb_tile_coord.y - j - 1));
+		if (GID - firstGid >= 0) {
+			map->getLayer("bricks")->removeTileAt(Vec2(bomb_tile_coord.x, bomb_tile_coord.y - j - 1));
+			if (bomb_tile_coord.y - j - 1 != 0) {
+				map->getLayer("tops")->removeTileAt(Vec2(bomb_tile_coord.x, bomb_tile_coord.y - j - 2));
+			}
+				destructable->removeTileAt(Vec2(bomb_tile_coord.x, bomb_tile_coord.y - j - 1));
+			break;
+		}
+	}
 }
 
 bool GameScene::isOutOfMap(Vec2 pos) 
@@ -231,57 +281,26 @@ bool GameScene::collideWithBubble(cocos2d::Vec2 targetPos)
 
 void GameScene::makeMove(Vec2 position)
 {
-	Vec2 targetPos = position;
-
 	// correct the detection deviation caused by the sprite size
 	Size figSize = hero->getContentSize();
+	
+	Vec2 targetPos_down(position.x,  position.y - figSize.height / 2);
+	Vec2 targetPos_top = position;
 
-	if (y_movement == MOVE_STOP) {
-		switch (x_movement) {
-		case MOVE_LEFT:
-			targetPos.x -= 1 * figSize.width / 3;
-			break;
-		case MOVE_RIGHT:
-			targetPos.x += 1 * figSize.width / 3;
-			break;
-		}
+	switch (x_movement) {
+	case MOVE_LEFT:
+		targetPos_down.x -= 1 * figSize.width / 3;
+		targetPos_top.x -= 1 * figSize.width / 3;
+		break;
+	case MOVE_RIGHT:
+		targetPos_down.x += 1 * figSize.width / 3;
+		targetPos_top.x += 1 * figSize.width / 3;
+		break;
 	}
-	else {
-		switch (y_movement) {
-		case MOVE_UP:
-			if (x_movement == MOVE_STOP) {
-				break;
-			}
-			else {
-				if (x_movement == MOVE_LEFT) {
-					targetPos.x -= 1 * figSize.width / 3;
-				}
-				else {
-					targetPos.x += 1 * figSize.width / 3;
-				}
-				break;
-			}
-		case MOVE_DOWN:
-    		targetPos.y -= figSize.height / 2 + 3;
-			if (x_movement == MOVE_STOP) {
-				break;
-			}
-			else {
-				if (x_movement == MOVE_LEFT) {
-					targetPos.x -= 1 * figSize.width / 3;
-				}
-				else {
-					targetPos.x += 1 * figSize.width / 3;
-				}
-				break;
-			}
-		}
-	}
-
 	// if the target position is out of bound
-	if (isOutOfMap(targetPos)) return;
+	if (isOutOfMap(targetPos_down) || isOutOfMap(targetPos_top)) return;
 
-	if (collideWithBrick(targetPos) || collideWithBubble(targetPos)) return;
+	if (collideWithBrick(targetPos_down) || collideWithBrick(targetPos_top) || collideWithBubble(targetPos_down) || collideWithBubble(targetPos_top)) return;
 
 	hero->setPosition(position);
 }
