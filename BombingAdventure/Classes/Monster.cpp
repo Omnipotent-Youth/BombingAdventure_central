@@ -15,7 +15,7 @@ Monster::Monster() {
 
     /* Default view of a new monster         */
     bind_sprite(Sprite::create("stone_monster.png"));
-    this->setAnchorPoint(Vec2(0.5,0.5));
+    this->setAnchorPoint(Vec2(0.35, 0.25));
 }
 Monster::~Monster() {
     /* Not yet  */

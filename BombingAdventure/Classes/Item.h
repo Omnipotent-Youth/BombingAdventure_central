@@ -13,7 +13,7 @@ USING_NS_CC;
 /* Following are the attributes of items    */
 const int ITEM_CURE_BY = 1;
 const int ITEM_ADD_BOMBS_BY = 1;
-const float ITEM_SPEED_UP_BY = 0.5;
+const float ITEM_SPEED_UP_BY = 2.f;
 
 class Item : public Entity {
 public:
@@ -29,7 +29,7 @@ public:
     virtual bool init();
 
     /* Override update method   */
-    virtual void update(float delta);
+//    virtual void update(float delta);
 
     int get_item_id();
 
