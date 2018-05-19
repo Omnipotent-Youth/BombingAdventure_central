@@ -149,6 +149,13 @@ bool GameScene::init() {
     /* Enable update function of the GameScene, which controls the refreshments */
     this->scheduleUpdate();
 
+    /* Initialize a MonsterController   */
+    MonsterController * monster_controller = MonsterController::create();
+    this->addChild(monster_controller,499);
+
+    /* Initialize an ItemController     */
+    ItemController * item_controller = ItemController::create();
+    this->addChild(item_controller,498);
 	return true;
 }
 
@@ -183,7 +190,6 @@ void GameScene::update(float delta) {
     if (item_position == hero_position) {
         hero->pick_item(*speed_up_item);
     }
-
 }
 
 void GameScene::bomb_explode(Bomb *bomb)

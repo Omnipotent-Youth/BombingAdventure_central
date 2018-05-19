@@ -18,14 +18,21 @@ Sprite* Entity::get_sprite() {
 void Entity::bind_sprite(Sprite *sprite) {
     this->entity_sprite = sprite;
     this->addChild(entity_sprite);
-}
-const Size& Entity::getContentSize() {
-    if (get_sprite() == NULL) {
-        return ENTITY_DEFAULT_SIZE;
-    }
-    return this->get_sprite()->getContentSize();
-}
 
+    /* Reset the content size and fit the mid-points    */
+
+        Size entity_size = entity_sprite->getContentSize();
+        entity_sprite->setAnchorPoint(Vec2(0.5,0.5));
+        this->setAnchorPoint(Vec2(0.5, 0.5));
+        entity_sprite->setPosition(Vec2(entity_size.width * 0.5f, entity_size.height * 0.5f));
+        this->setContentSize(entity_size);
+
+}
+void Entity::reset_position() {
+    if(get_sprite() != NULL) {
+        setPosition(Vec2(CCRANDOM_0_1() * 960, CCRANDOM_0_1() * 640));
+    }
+}
 Vec2 Entity::tileCoordFromPosition(Vec2 position)
 {
 	int x = position.x / TILE_SIZE.width;
