@@ -18,8 +18,6 @@ const int PLAYER_DEFAULT_AVAILABLE_BOMBS = 3;
 const float PLAYER_DEFAULT_MOVING_SPEED = 3.0f;
 const int PLAYER_MAX_HP = 10;
 const float PLAYER_MAX_MOVING_SPEED = 8.0f;
-enum MOVE_SIGNAL_X {MOVE_LEFT = -1, MOVE_STOP_X, MOVE_RIGHT};
-enum MOVE_SIGNAL_Y {MOVE_DOWN = -1, MOVE_STOP_Y, MOVE_UP};
 
 class Player : public Entity {
 public:
@@ -97,15 +95,6 @@ public:
      */
     float get_moving_speed();
 
-    int get_direction();
-
-    int get_x_movement();
-
-    int get_y_movement();
-
-    /* Following variables mark the movement status of player   */
-    int x_movement = MOVE_SIGNAL_X::MOVE_STOP_X;         /* Initiate with player stops   */
-    int y_movement = MOVE_SIGNAL_Y::MOVE_STOP_Y;         /* Initiate with player stops   */
 protected:
     /*    Instance variables    */
 
@@ -114,7 +103,6 @@ protected:
     float moving_speed;
     int num_max_available_bombs;
     int num_present_bombs;
-
 private:
 //    int cool_down_time;
 //    void set_HP(int new_HP);

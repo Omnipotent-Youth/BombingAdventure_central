@@ -18,7 +18,6 @@ bool ItemController::init() {
 }
 void ItemController::update(float delta) {
     for (Item * item : current_item_vector) {
-        /* Check whether this item is picked by the monitored player    */
         if (is_picked(item)) {
             monitored_player->pick_item(*item);
             item->removeAllChildren();

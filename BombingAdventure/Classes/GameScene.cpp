@@ -1,7 +1,19 @@
 #include "GameScene.h"
 #include "HelloWorldScene.h"
 
+//using namespace std;
 USING_NS_CC;
+
+/* Following constants are the marks of movement status     */
+const int MOVE_LEFT = -1;
+const int MOVE_RIGHT = 1;
+const int MOVE_UP = 1;
+const int MOVE_DOWN = -1;
+const int MOVE_STOP = 0;
+
+/* Following variables mark the movement status of player   */
+int x_movement = MOVE_STOP;         /* Initiate with player stops   */
+int y_movement = MOVE_STOP;         /* Initiate with player stops   */
 
 /*
  * Implementation Note: similar to HelloWorldScene::createScene().
@@ -91,19 +103,19 @@ bool GameScene::init() {
         switch (keyboard_code) {
             case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
             case EventKeyboard::KeyCode::KEY_A:
-                hero->x_movement = MOVE_SIGNAL_X::MOVE_LEFT;
+                x_movement = MOVE_LEFT;
                 break;
             case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
             case EventKeyboard::KeyCode::KEY_D:
-                hero->x_movement = MOVE_SIGNAL_X::MOVE_RIGHT;
+                x_movement = MOVE_RIGHT;
                 break;
             case EventKeyboard::KeyCode::KEY_UP_ARROW:
             case EventKeyboard::KeyCode::KEY_W:
-                hero->y_movement = MOVE_SIGNAL_Y::MOVE_UP;
+                y_movement = MOVE_UP;
                 break;
             case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
             case EventKeyboard::KeyCode::KEY_S:
-                hero->y_movement = MOVE_SIGNAL_Y::MOVE_DOWN;
+                y_movement = MOVE_DOWN;
                 break;
             case EventKeyboard::KeyCode::KEY_SPACE:
                 if (here_can_set(hero->getPosition()) && hero->can_set_bomb()) {
@@ -117,19 +129,19 @@ bool GameScene::init() {
         switch (keyboard_code) {
             case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
             case EventKeyboard::KeyCode::KEY_A:
-                hero->x_movement = MOVE_SIGNAL_X::MOVE_STOP_X;
+                x_movement = MOVE_STOP;
                 break;
             case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
             case EventKeyboard::KeyCode::KEY_D:
-                hero->x_movement = MOVE_SIGNAL_X::MOVE_STOP_X;
+                x_movement = MOVE_STOP;
                 break;
             case EventKeyboard::KeyCode::KEY_UP_ARROW:
             case EventKeyboard::KeyCode::KEY_W:
-                hero->y_movement = MOVE_SIGNAL_Y::MOVE_STOP_Y;
+                y_movement = MOVE_STOP;
                 break;
             case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
             case EventKeyboard::KeyCode::KEY_S:
-                hero->y_movement = MOVE_SIGNAL_Y::MOVE_STOP_Y;
+                y_movement = MOVE_STOP;
                 break;
         }
     };
@@ -142,7 +154,6 @@ bool GameScene::init() {
 
     /* Initialize a MonsterController   */
     MonsterController * monster_controller = MonsterController::create();
-    monster_controller->bind_player(hero);
     this->addChild(monster_controller,499);
 
     /* Initialize an ItemController     */
@@ -169,10 +180,10 @@ void GameScene::update(float delta) {
 
 	float moving_speed = hero->get_moving_speed();
 
-	position_x += hero->get_x_movement() * moving_speed;
-	position_y += hero->get_y_movement() * moving_speed;
+	position_x += x_movement * moving_speed;
+	position_y += y_movement * moving_speed;
 
-	makeMove(Vec2(position_x, position_y), hero);
+	makeMove(Vec2(position_x, position_y));
 
 	/* Bombs blow up destructable bricks */
 	while (!current_bombs.empty() && current_bombs.front()->bombIsExploded()) {
@@ -180,6 +191,17 @@ void GameScene::update(float delta) {
 		bomb_explode(bomb);
 		current_bombs.erase(0);
 	}
+
+    /* Test pick_item method    */
+//    Item * speed_up_item = Item::create();
+//    speed_up_item->setPosition(Vec2(500, 380));
+//    this->addChild(speed_up_item);
+//
+//    auto item_position = tileCoordFromPosition(speed_up_item->getPosition());
+//    auto hero_position = tileCoordFromPosition(hero->getPosition());
+//    if (item_position == hero_position) {
+//        hero->pick_item(*speed_up_item);
+//    }
 }
 
 void GameScene::bomb_explode(Bomb *bomb)
@@ -364,20 +386,20 @@ bool GameScene::collideWithBubble(Vec2 playerPos, Vec2 targetPos)
 	return false;
 }
 
-void GameScene::makeMove(Vec2 position, Player * player)
+void GameScene::makeMove(Vec2 position)
 {
 	// correct the detection deviation caused by the sprite size
-	Size figSize = player->getContentSize();
+	Size figSize = hero->getContentSize();
 	
 	Vec2 targetPos_down(position.x,  position.y - figSize.height / 2);
 	Vec2 targetPos_top = position;
 
-	switch (player->get_x_movement()) {
-	    case MOVE_SIGNAL_X::MOVE_LEFT:
+	switch (x_movement) {
+	case MOVE_LEFT:
 		targetPos_down.x -= 1 * figSize.width / 3;
 		targetPos_top.x -= 1 * figSize.width / 3;
 		break;
-	    case MOVE_SIGNAL_X::MOVE_RIGHT:
+	case MOVE_RIGHT:
 		targetPos_down.x += 1 * figSize.width / 3;
 		targetPos_top.x += 1 * figSize.width / 3;
 		break;
@@ -387,9 +409,9 @@ void GameScene::makeMove(Vec2 position, Player * player)
 
 	if (collideWithBrick(targetPos_down) || collideWithBrick(targetPos_top)) return;
 
-	if (collideWithBubble(player->getPosition(), targetPos_top)) return;
+	if (collideWithBubble(hero->getPosition(), targetPos_top)) return;
 
-	player->setPosition(position);
+	hero->setPosition(position);
 }
 
 Vec2 GameScene::tileCoordFromPosition(Vec2 position)

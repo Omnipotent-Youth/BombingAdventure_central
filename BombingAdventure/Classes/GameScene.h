@@ -39,7 +39,7 @@ public:
 
 	bool collideWithBubble(cocos2d::Vec2 playerPos, cocos2d::Vec2 targetPos);
 
-	void makeMove(cocos2d::Vec2 position, Player * player);
+	void makeMove(cocos2d::Vec2 position);
 
 	void game_over();
 
