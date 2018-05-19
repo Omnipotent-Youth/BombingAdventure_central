@@ -6,6 +6,7 @@
 #define BOMBING_ADVENTURE_MONSTERCONTROLLER_H
 
 #include "cocos2d.h"
+#include "Player.h"
 #include "Monster.h"
 
 
@@ -29,6 +30,9 @@ public:
 
     /* Override update method   */
     virtual void update(float delta);
+
+    /* */
+    void bind_player(Player * player);
 private:
     /* Method: create_monster
      * ----------------------
@@ -37,6 +41,7 @@ private:
     void create_monster();
     /* Store all the Monsters   */
     Vector<Monster*> current_monster_vector;
+    Player * monitored_player = NULL;
 };
 
 #endif //BOMBING_ADVENTURE_MONSTERCONTROLLER_H
