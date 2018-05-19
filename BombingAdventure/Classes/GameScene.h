@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "MonsterController.h"
 #include "Monster.h"
+#include "ItemController.h"
 #include "Item.h"
 
 const cocos2d::Size TILE_SIZE(40, 40);

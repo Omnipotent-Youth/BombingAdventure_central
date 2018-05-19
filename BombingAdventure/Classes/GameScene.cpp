@@ -154,6 +154,9 @@ bool GameScene::init() {
     MonsterController * monster_controller = MonsterController::create();
     this->addChild(monster_controller,499);
 
+    /* Initialize an ItemController     */
+    ItemController * item_controller = ItemController::create();
+    this->addChild(item_controller,498);
 	return true;
 }
 
