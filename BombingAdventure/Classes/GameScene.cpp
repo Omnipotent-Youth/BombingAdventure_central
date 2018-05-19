@@ -155,7 +155,12 @@ bool GameScene::init() {
 
     /* Initialize an ItemController     */
     ItemController * item_controller = ItemController::create();
-    this->addChild(item_controller,498);
+    item_controller->bind_player(hero);
+    this->addChild(item_controller);
+
+    /* If uncomment the following statement, items will be hid under the bricks    */
+//    item_controller->setGlobalZOrder(0);
+    monster_controller->setGlobalZOrder(99);
 	return true;
 }
 
@@ -181,15 +186,15 @@ void GameScene::update(float delta) {
 	}
 
     /* Test pick_item method    */
-    Item * speed_up_item = Item::create();
-    speed_up_item->setPosition(Vec2(500, 380));
-    this->addChild(speed_up_item);
-
-    auto item_position = tileCoordFromPosition(speed_up_item->getPosition());
-    auto hero_position = tileCoordFromPosition(hero->getPosition());
-    if (item_position == hero_position) {
-        hero->pick_item(*speed_up_item);
-    }
+//    Item * speed_up_item = Item::create();
+//    speed_up_item->setPosition(Vec2(500, 380));
+//    this->addChild(speed_up_item);
+//
+//    auto item_position = tileCoordFromPosition(speed_up_item->getPosition());
+//    auto hero_position = tileCoordFromPosition(hero->getPosition());
+//    if (item_position == hero_position) {
+//        hero->pick_item(*speed_up_item);
+//    }
 }
 
 void GameScene::bomb_explode(Bomb *bomb)
