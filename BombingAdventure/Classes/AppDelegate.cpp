@@ -87,7 +87,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->runWithScene(scene);
 
 	// background music preloaded
-	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("music&effect/HelloMusic");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("music&effect/HelloMusic.mp3");
 
 	return true;
 }

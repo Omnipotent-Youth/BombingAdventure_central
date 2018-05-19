@@ -46,6 +46,8 @@ public:
      */
     void pick_item(Item & item);
 
+	void bomb_vs_man(Vec2 bomb_tile_coord, int l, int r, int u, int d);
+
     /* Method: injured
      * Usage: Player->injured(deduct_HP);
      * ----------------------------------
