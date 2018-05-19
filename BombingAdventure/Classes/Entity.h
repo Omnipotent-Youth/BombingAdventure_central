@@ -17,8 +17,7 @@ public:
     ~Entity();
     Sprite* get_sprite();                   /* Get the sprite of this entity        */
     void bind_sprite(Sprite* sprite);       /* Bind to sprite object                */
-    Point get_position();                   /* Return the position of this entity   */
-
+    virtual void reset_position();          /* Reset the position of this entity    */
 	cocos2d::Vec2 tileCoordFromPosition(cocos2d::Vec2 position);
 
 private:
