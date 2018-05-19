@@ -57,6 +57,10 @@ public:
 
     void startCounting(float time);
 
+	int getPower();
+
+	bool bombIsCounting();
+
 private:
 
     int power;              /* The power of the bomb                */

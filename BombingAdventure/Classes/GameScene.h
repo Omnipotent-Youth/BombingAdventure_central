@@ -44,9 +44,7 @@ public:
 	 * 这个函数实现：判定炸弹爆炸的有效范围（是否被砖块挡住），把范围内的可炸(dectructable)砖块炸掉。
 	 * 炸弹炸到人的判定可以再写一个函数？
 	 */
-	void bomb_explode();
-
-	Vector<Bomb*> get_all_bomb();
+	void bomb_explode(Bomb *bomb);
 
 	bool isOutOfMap(cocos2d::Vec2 pos);
 
@@ -94,9 +92,9 @@ public:
 //	Item * speed_up_item;
 private:
 
-	Vector<Bomb*> currentBomb;
-	cocos2d::TMXTiledMap * map;		/* the tile map for Bombing Adventure game */
-	cocos2d::TMXLayer * collidable;
+	Vector<Bomb*> current_bombs;
+	cocos2d::TMXTiledMap * map;			/* the tile map for Bombing Adventure game */
+	cocos2d::TMXLayer * destructable;	/* destructable layer                      */
 
     enum STATUS_AT {
         EMPTY,      /* Corresponding position is empty              */
