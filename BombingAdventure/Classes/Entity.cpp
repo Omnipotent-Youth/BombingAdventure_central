@@ -20,9 +20,13 @@ void Entity::bind_sprite(Sprite *sprite) {
     this->addChild(entity_sprite);
 
     /* Reset the content size and fit the mid-points    */
-    Size entity_size = entity_sprite->getContentSize();
-    entity_sprite->setPosition(Vec2(entity_size.width * 0.5f, entity_size.height * 0.5f));
-    this->setContentSize(entity_size);
+    if(get_sprite() == NULL) {
+        this->setContentSize(ENTITY_DEFAULT_SIZE);
+    } else {
+        Size entity_size = entity_sprite->getContentSize();
+        entity_sprite->setPosition(Vec2(entity_size.width * 0.5f, entity_size.height * 0.5f));
+        this->setContentSize(entity_size);
+    }
 }
 void Entity::reset_position() {
     if(get_sprite() != NULL) {
