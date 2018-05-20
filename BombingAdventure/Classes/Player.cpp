@@ -4,6 +4,7 @@
 
 #include "GameScene.h"
 #include "Player.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -105,6 +106,9 @@ void Player::pick_item(Item *item) {
     }
     log("Pick item.");
     log("Now my speed is %f", moving_speed);
+
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music&effect/pickItem.mp3");
+
     item->is_picked = true;
 }
 
@@ -132,6 +136,7 @@ void Player::injured(int deduct_HP) {
             HP = 0;
         }
     }
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music&effect/hero_injured.mp3");
 }
 
 int Player::getPower()

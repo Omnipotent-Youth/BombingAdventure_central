@@ -4,6 +4,7 @@
 
 USING_NS_CC;
 
+// resolution size for this game is 960 * 640 (in pixel)
 static cocos2d::Size designResolutionSize = cocos2d::Size(960, 640);
 static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(960, 640);
@@ -40,7 +41,8 @@ static int register_all_packages()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
-    // initialize director
+    
+	// initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
@@ -80,17 +82,21 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-    // create a scene. it's an autorelease object
+    // create the first scene. it's an autorelease object
     auto scene = HelloWorld::createScene();
 
-	// run
+	// run scene 
     director->runWithScene(scene);
 
-	// background music preloaded
+	// background music and effect preloaded
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("music&effect/HelloMusic.mp3");
-
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("music&effect/BubbleSet.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("music&effect/BubbleBoom.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("music&effect/pickItem.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("music&effect/monster_dead.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("music&effect/hero_injured.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("music&effect/game_over.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("music&effect/win_game.mp3");
 
 	return true;
 }

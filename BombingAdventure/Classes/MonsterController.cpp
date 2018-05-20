@@ -4,6 +4,7 @@
 
 #include "MonsterController.h"
 #include "GameScene.h"
+#include "SimpleAudioEngine.h"
 
 bool MonsterController::init() {
     /* Get current time to initialize a random seed     */
@@ -41,6 +42,7 @@ void MonsterController::update(float delta) {
 			monster->removeFromParent();
 			iter = current_monster_vector.erase(iter);
 			log("Monster is removed.");
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music&effect/monster_dead.mp3");
 		}
     }
 }
