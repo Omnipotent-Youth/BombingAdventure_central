@@ -33,14 +33,16 @@ public:
 
     /* */
     void bind_player(Player * player);
+
+    /* Store all the Monsters   */
+    Vector<Monster*> current_monster_vector;
 private:
     /* Method: create_monster
      * ----------------------
      * Create a monster
      */
     void create_monster();
-    /* Store all the Monsters   */
-    Vector<Monster*> current_monster_vector;
+
     Player * monitored_player = NULL;
 };
 

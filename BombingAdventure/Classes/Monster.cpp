@@ -27,6 +27,27 @@ int Monster::get_new_direction() {
     int new_direction = (int) floor(CCRANDOM_0_1() * 4);
     return new_direction;
 }
+void Monster::make_new_direction() {
+    auto new_direction = get_new_direction();
+    switch (new_direction) {
+        case direction::MOVE_UP:
+            y_movement = MOVE_SIGNAL_Y::MOVE_UP;
+            break;
+        case direction::MOVE_DOWN:
+            y_movement = MOVE_SIGNAL_Y::MOVE_DOWN;
+            break;
+        case direction::MOVE_RIGHT:
+            x_movement = MOVE_SIGNAL_X::MOVE_RIGHT;
+            break;
+        case direction::MOVE_LEFT:
+            x_movement = MOVE_SIGNAL_X::MOVE_LEFT;
+            break;
+        default:
+            x_movement = MOVE_SIGNAL_X::MOVE_STOP_X;
+            y_movement = MOVE_SIGNAL_Y::MOVE_STOP_Y;
+            break;
+    }
+}
 //void Monster::move_forward(int new_direction) {
 //    switch (new_direction) {
 //        case MOVE_UP:

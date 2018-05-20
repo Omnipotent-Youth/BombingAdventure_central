@@ -99,7 +99,7 @@ public:
      */
     float get_moving_speed();
 
-    int get_direction();
+//    int get_direction();
 
     int get_x_movement();
 

@@ -35,10 +35,11 @@ public:
 
     /* Method: move_forward  */
 //    void move_forward(int new_direction);
+    void make_new_direction();
 
+    enum direction { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT };
 
 private:
-    enum direction { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT };
 
 };
 

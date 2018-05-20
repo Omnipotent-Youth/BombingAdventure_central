@@ -143,12 +143,12 @@ bool GameScene::init() {
     this->scheduleUpdate();
 
     /* Initialize a MonsterController   */
-    MonsterController * monster_controller = MonsterController::create();
+    monster_controller = MonsterController::create();
     monster_controller->bind_player(hero);
     this->addChild(monster_controller,499);
 
     /* Initialize an ItemController     */
-    ItemController * item_controller = ItemController::create();
+    item_controller = ItemController::create();
     item_controller->bind_player(hero);
 	this->addChild(item_controller);
 
@@ -174,6 +174,23 @@ void GameScene::update(float delta) {
 	position_y += hero->get_y_movement() * moving_speed;
 
 	makeMove(Vec2(position_x, position_y), hero);
+
+	for (Monster * monster : monster_controller->current_monster_vector) {
+
+	    monster->make_new_direction();
+	    /* Following part updates the movement of monster    */
+        float monster_position_x = monster->getPositionX();
+        float monster_position_y = monster->getPositionY();
+
+        float moving_speed = monster->get_moving_speed();
+
+        monster_position_x += monster->get_x_movement() * moving_speed;
+        monster_position_y += monster->get_y_movement() * moving_speed;
+
+        if(!makeMove(Vec2(monster_position_x, monster_position_y), monster)) {
+            monster->make_new_direction();
+        };
+	}
 
 	/* Bombs blow up destructable bricks */
 	while (!current_bombs.empty() && current_bombs.front()->bombIsExploded()) {
@@ -255,11 +272,12 @@ void GameScene::bomb_explode(Bomb *bomb)
 	}
 
 	hero->bomb_vs_man(bomb_tile_coord, l_range, r_range, u_range, d_range);
-
+    for (Monster * monster : monster_controller->current_monster_vector) {
+        monster->bomb_vs_man(bomb_tile_coord, l_range, r_range, u_range, d_range);
+    }
 	/* Now we have l_range, r_value, u_value, d_value, which indicate the explosion
 	 * range of the bomb in the four directions. What you need to do now is to 
 	 * display the animation effect of bombs.
-	 * Please add your code here...
 	 */
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Explosion.plist");
@@ -368,7 +386,7 @@ bool GameScene::collideWithBubble(Vec2 playerPos, Vec2 targetPos)
 	return false;
 }
 
-void GameScene::makeMove(Vec2 position, Player * player)
+bool GameScene::makeMove(Vec2 position, Player * player)
 {
 	// correct the detection deviation caused by the sprite size
 	Size figSize = player->getContentSize();
@@ -387,13 +405,14 @@ void GameScene::makeMove(Vec2 position, Player * player)
 		break;
 	}
 	// if the target position is out of bound
-	if (isOutOfMap(targetPos_down) || isOutOfMap(targetPos_top)) return;
+	if (isOutOfMap(targetPos_down) || isOutOfMap(targetPos_top)) return false;
 
-	if (collideWithBrick(targetPos_down) || collideWithBrick(targetPos_top)) return;
+	if (collideWithBrick(targetPos_down) || collideWithBrick(targetPos_top)) return false;
 
-	if (collideWithBubble(player->getPosition(), targetPos_top)) return;
+	if (collideWithBubble(player->getPosition(), targetPos_top)) return false;
 
 	player->setPosition(position);
+    return true;
 }
 
 Vec2 GameScene::tileCoordFromPosition(Vec2 position)

@@ -3,10 +3,10 @@
 
 #include "cocos2d.h"
 #include "Player.h"
-#include "MonsterController.h"
 #include "Monster.h"
-#include "ItemController.h"
 #include "Item.h"
+#include "MonsterController.h"
+#include "ItemController.h"
 
 const cocos2d::Size TILE_SIZE(40, 40);
 const cocos2d::Size MAP_SIZE(24, 16);
@@ -39,7 +39,7 @@ public:
 
 	bool collideWithBubble(cocos2d::Vec2 playerPos, cocos2d::Vec2 targetPos);
 
-	void makeMove(cocos2d::Vec2 position, Player * player);
+	bool makeMove(cocos2d::Vec2 position, Player * player);
 
 	void game_over();
 
@@ -103,6 +103,8 @@ private:
 	/* Test class Player part   */
     Player * hero = NULL;      /* This is the player control by human  */
 //    Map<Vec2, STATUS_AT*> status_map;
+        MonsterController * monster_controller = NULL;
+        ItemController * item_controller = NULL;
 
 };
 
