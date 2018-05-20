@@ -55,10 +55,10 @@ bool HelloWorld::init()
 		CC_CALLBACK_1(HelloWorld::menuRulesScene, this));
 
 	// set positions
-	float x = origin.x + visibleSize.width - closeItem->getContentSize().width/10;
-	float y = origin.y + closeItem->getContentSize().height/10;
+	float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
+	float y = origin.y + closeItem->getContentSize().height/2;
 	closeItem->setPosition(Vec2(x,y));
-  	closeItem->setScale(0.1);
+  	closeItem->setScale(0.5);
 	startItem->setAnchorPoint(Vec2(0.5, 0.5));
 	rulesItem->setAnchorPoint(Vec2(0.5, 0.5));
 	startItem->setPosition(Vec2(visibleSize.width / 2, 2 * visibleSize.height / 3));
