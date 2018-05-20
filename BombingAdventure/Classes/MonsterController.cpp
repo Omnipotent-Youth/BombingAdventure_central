@@ -6,10 +6,10 @@
 
 bool MonsterController::init() {
     /* Get current time to initialize a random seed     */
-    timeval now;
-    gettimeofday(&now, NULL);
-    auto seed = (unsigned) (now.tv_sec * 1000 + now.tv_usec / 1000);
-    srand(seed);
+//    timeval now;
+//    gettimeofday(&now, NULL);
+//    auto seed = (unsigned) (now.tv_sec * 1000 + now.tv_usec / 1000);
+//    srand(seed);
 
     create_monster();
     /* Enable update    */
@@ -19,12 +19,23 @@ bool MonsterController::init() {
 void MonsterController::update(float delta) {
     for (Monster* monster: current_monster_vector) {
         if (monster->is_alive()) {
+
             Vec2 monster_pos_in_pixel = monster->getPosition();
             Vec2 monster_pos_in_tile = monster->tileCoordFromPosition(monster_pos_in_pixel);
         if (monster_pos_in_tile.x < 0 || monster_pos_in_tile.x > 40
                 || monster_pos_in_tile.y < 0 || monster_pos_in_tile.y > 40) {
             monster->reset_position();
         }
+
+        if (monster->collided_with(monitored_player)) {
+            monitored_player->injured();
+            log("The HP of the player is %d", monitored_player->get_HP());
+        }
+        } else {
+            monster->removeAllChildren();
+            monster->removeFromParent();
+            current_monster_vector.eraseObject(monster);
+            log("Monster is removed.");
         }
     }
 }
@@ -39,4 +50,7 @@ void MonsterController::create_monster() {
         this->addChild(monster);
         current_monster_vector.pushBack(monster);
     }
+}
+void MonsterController::bind_player(Player * player) {
+    monitored_player = player;
 }

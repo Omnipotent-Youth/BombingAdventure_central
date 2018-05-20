@@ -28,13 +28,18 @@ public:
     /* Initiate Method  */
     virtual bool init();
 
+    bool collided_with(Player * player);
+
     /* Method: get_new_direction */
     int get_new_direction();
+
     /* Method: move_forward  */
 //    void move_forward(int new_direction);
+    void make_new_direction();
+
+    enum direction { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT };
 
 private:
-    enum direction { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT };
 
 };
 
