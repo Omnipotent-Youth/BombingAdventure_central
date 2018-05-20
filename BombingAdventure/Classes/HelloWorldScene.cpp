@@ -38,8 +38,8 @@ bool HelloWorld::init()
 	// create three menu items
 	// close game
 	auto closeItem = MenuItemImage::create(
-		"_CloseSelected.png",
-		"_CloseSelected.png",
+		"quit.png",
+		"quit.png",
 		CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
 	// start game
@@ -53,7 +53,6 @@ bool HelloWorld::init()
 		"Rules.png",
 		"Rules.png",
 		CC_CALLBACK_1(HelloWorld::menuRulesScene, this));
-
 
 	// set positions
 	float x = origin.x + visibleSize.width - closeItem->getContentSize().width/10;
