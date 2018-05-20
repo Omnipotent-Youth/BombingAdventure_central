@@ -33,13 +33,8 @@ public:
     /* Method: get_new_direction */
     int get_new_direction();
 
-    /* Method: move_forward  */
-//    void move_forward(int new_direction);
+    /* Method: make_new_direction*/
     void make_new_direction();
-
-
-	bool is_in_forbidden();
-
 
     enum direction { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT };
 

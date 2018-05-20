@@ -59,10 +59,6 @@ public:
 
 	int getPower();
 
-//  View
-
-//  Models
-
     /* Method: get_HP
      * Usage: int HP = Player->get_HP;
      * --------------------------
@@ -71,12 +67,9 @@ public:
      */
     int get_HP();
 
-    /* Method: get_num_available_bombs
-     * Usage: int available_bombs = Player->get_num_available_bombs();
-     * ---------------------------------------------------------------
-     * Get the number of available bombs which can be set by the Player.
-     */
-    int get_num_available_bombs();
+    int get_x_movement();
+
+    int get_y_movement();
 
     /* Method: can_set_bomb
      * Usage: if (Player->can_set_bomb()) do...
@@ -99,12 +92,6 @@ public:
      */
     float get_moving_speed();
 
-//    int get_direction();
-
-    int get_x_movement();
-
-    int get_y_movement();
-
     /* Following variables mark the movement status of player   */
     int x_movement = MOVE_SIGNAL_X::MOVE_STOP_X;         /* Initiate with player stops   */
     int y_movement = MOVE_SIGNAL_Y::MOVE_STOP_Y;         /* Initiate with player stops   */
@@ -120,12 +107,6 @@ protected:
 
 private:
 
-//    int cool_down_time;
-//    void set_HP(int new_HP);
-//    void set_moving_speed(float new_speed);
-//    void set_cool_down_time(int new_time);
-//
-//    Label* player_name = Label::create("Player1", "Arial", 24);
 };
 
 #endif //MYGAME_PLAYER_H

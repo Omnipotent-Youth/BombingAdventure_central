@@ -55,12 +55,6 @@ int Player::get_HP() {
     if (get_sprite() == NULL) return -1;
     return HP;
 }
-
-int Player::get_num_available_bombs() {
-    if (get_sprite() == NULL) return -1;
-    return (num_max_available_bombs - num_present_bombs);
-}
-
 Bomb* Player::set_bomb() {
     if (get_sprite() == NULL) return NULL;
     Bomb * bomb = Bomb::create();
@@ -83,28 +77,31 @@ Bomb* Player::set_bomb() {
 void Player::pick_item(Item *item) {
     if (get_sprite() == NULL) return;   /* Avoid strange things happened :) */
     int item_id = item->get_item_id();
+    log("Pick item.");
     switch (item_id) {
         case Item::POWER_UP:
 			if (power < MAX_POWER) {
 				power++;
+                log("Now my power is %d", power);
 			}
             break;
         case Item::SPEED_UP:
             if (moving_speed < PLAYER_MAX_MOVING_SPEED) {
                 this->moving_speed += ITEM_SPEED_UP_BY;
+                log("Now my speed is %f", moving_speed);
             }
             break;
         case Item::HP_UP:
             if (HP < PLAYER_MAX_HP) {
                 this->HP += ITEM_CURE_BY;
+                log("Now my HP is %d", HP);
             }
             break;
         case Item::NUM_BOMBS_UP:
             this->num_max_available_bombs += ITEM_ADD_BOMBS_BY;
+            log("Now my number of maximum available bombs is %d", num_max_available_bombs);
             break;
     }
-    log("Pick item.");
-    log("Now my speed is %f", moving_speed);
     item->is_picked = true;
 }
 
@@ -113,12 +110,12 @@ void Player::bomb_vs_man(Vec2 bomb_tile_coord, int l, int r, int u, int d)
 	--(this->num_present_bombs);
 	
 	Vec2 player_tile_coord = tileCoordFromPosition(this->getPosition());
-	for (int i = bomb_tile_coord.x - l; i <= bomb_tile_coord.x + r; i++) {
+	for (int i = (int) (bomb_tile_coord.x - l); i <= bomb_tile_coord.x + r; i++) {
 		if (player_tile_coord == Vec2(i, bomb_tile_coord.y)) {
 			this->injured();
 		}
 	}
-	for (int j = bomb_tile_coord.y - d; j <= bomb_tile_coord.y + u; j++) {
+	for (int j = (int) (bomb_tile_coord.y - d); j <= bomb_tile_coord.y + u; j++) {
 		if (player_tile_coord == Vec2(bomb_tile_coord.x, j)) {
 			this->injured();
 		}

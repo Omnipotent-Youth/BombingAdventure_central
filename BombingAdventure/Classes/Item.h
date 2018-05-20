@@ -28,9 +28,6 @@ public:
     /* Initiate Method  */
     virtual bool init();
 
-    /* Override update method   */
-//    virtual void update(float delta);
-
     int get_item_id();
 
     enum items {POWER_UP, SPEED_UP, HP_UP, NUM_BOMBS_UP};
