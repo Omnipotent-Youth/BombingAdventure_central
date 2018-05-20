@@ -12,9 +12,11 @@ Entity::Entity() {
 Entity::~Entity() {
 
 }
+
 Sprite* Entity::get_sprite() {
     return this->entity_sprite;
 }
+
 void Entity::bind_sprite(Sprite *sprite) {
     this->entity_sprite = sprite;
     this->addChild(entity_sprite);

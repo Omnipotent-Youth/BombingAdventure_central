@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include "GameOverScene.h"
 
 USING_NS_CC;
 
@@ -45,6 +46,7 @@ bool GameScene::init() {
 	map->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	// add the map into the scene
 	this->addChild(map, 1, 100);
+
 	map->getLayer("background")->setGlobalZOrder(-1);
 
 	bricks = map->getLayer("bricks");
@@ -145,11 +147,16 @@ bool GameScene::init() {
     /* Initialize a MonsterController   */
     monster_controller = MonsterController::create();
     monster_controller->bind_player(hero);
+	monster_controller->bind_layer(bricks);
+	monster_controller->create_monster();
     this->addChild(monster_controller,499);
 
     /* Initialize an ItemController     */
     item_controller = ItemController::create();
     item_controller->bind_player(hero);
+	item_controller->bind_bricks_layer(bricks);
+	item_controller->bind_destructable_layer(destructable);
+	item_controller->create_item();
 	this->addChild(item_controller);
 
     /* If uncomment the following statement, items will be hid under the bricks    */
@@ -160,9 +167,9 @@ bool GameScene::init() {
 
 void GameScene::update(float delta) {
 
-//	if (!hero->is_alive()) {
-//		game_over();
-//	}
+	if (!hero->is_alive() || monster_controller->current_monster_vector.empty()) {
+		game_over();
+	}
 	
 	/* Following part updates the movement of player    */
 	float position_x = hero->getPositionX();
@@ -424,5 +431,6 @@ Vec2 GameScene::tileCoordFromPosition(Vec2 position)
 
 void GameScene::game_over()
 {
-	Director::getInstance()->replaceScene(CCTransitionMoveInR::create(0.4f, HelloWorld::createScene()));
+	Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.8f, GameOverScene::createScene()));
 }
+
