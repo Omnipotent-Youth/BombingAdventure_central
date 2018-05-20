@@ -26,22 +26,46 @@ public:
 	 * Method:bomb_explode
 	 * Usage: bomb_explode();
 	 * ---------------------
+	 * Simulate the explosion process of the bomb, related to the map.
+	 * Firstly, it will calculate the explosion range in four directions 
+	 * considering the blocking of map bricks.
+	 * Then, it will check the position relationship between bomb and player
+	 * (the hero and monsters).
+	 * Finally, the explosion animation will be implemented in this method.
 	 *
 	 */
+
 	void bomb_explode(Bomb *bomb);
 
-	bool isOutOfMap(cocos2d::Vec2 pos);
+	/**
+	 * Method: isOutOfMap
+	 * Usage: if (isOutOfMap(pos))
+	 * ---------------------------
+	 * Returns true if the position is out of the map.
+	 */
 
+	bool isOutOfMap(cocos2d::Vec2 pos);
+	/**
+	* Method: here_can_set
+	* ---------------------------
+	* Returns true if a bomb can be set in the position.
+	*/
 	bool here_can_set(Vec2 pos);
 
+	// These two methods check the collision bewteen player and bricks, 
+	// and between player and bombs.
 	bool collideWithBrick(cocos2d::Vec2 targetPos);
-
 	bool collideWithBubble(cocos2d::Vec2 playerPos, cocos2d::Vec2 targetPos);
-
+	
+	// Method: makeMove
+	// ----------------
+	// the player makes move
 	bool makeMove(cocos2d::Vec2 position, Player * player);
 
+	// game ends and call game over scene.
 	void game_over();
 
+	// menu call back function to call game over scene
 	virtual void menuCallBack(cocos2d::Ref *pSender);
 
 	/* macro for creating layer */

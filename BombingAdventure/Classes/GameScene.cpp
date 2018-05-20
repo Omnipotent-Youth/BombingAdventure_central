@@ -94,6 +94,7 @@ bool GameScene::init() {
 	menu->setGlobalZOrder(200);
 	menu->setVisible(false);
 
+
     /* Following are keyboard listener  */
 
     /* Callback Function: game_keyboard_listener
@@ -184,7 +185,7 @@ bool GameScene::init() {
 	return true;
 }
 
-
+/* update function to check the state of game scene every delta seconds */
 void GameScene::update(float delta) {
 
 	if (!hero->is_alive()) {
@@ -192,7 +193,7 @@ void GameScene::update(float delta) {
 		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music&effect/game_over.mp3");
 	}
-
+	
 	if (monster_controller->current_monster_vector.empty()) {
 		this->getChildByName("menu")->setVisible(true);
 		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
@@ -241,30 +242,39 @@ void GameScene::update(float delta) {
 void GameScene::bomb_explode(Bomb *bomb)
 {
 	int power = hero->getPower();
+	// ranges in four directioins
 	int l_range = 0;
 	int r_range = 0;
 	int u_range = 0;
 	int d_range = 0;
 
 	Vec2 bomb_tile_coord = tileCoordFromPosition(bomb->getPosition());
+	// first Gid of the two layers
 	int firstGid_of_des = destructable->getTileSet()->_firstGid;
 	int firstGid_of_brk = bricks->getTileSet()->_firstGid;
 
 	for (; l_range < power && bomb_tile_coord.x - l_range - 1 >= 0; l_range++) {
+		// get Gid at brick layer
 		int GID_brk = bricks->getTileGIDAt(Vec2(bomb_tile_coord.x - l_range - 1, bomb_tile_coord.y));
+		// if the tile contains a brick
 		if (GID_brk - firstGid_of_brk >= 0){
+			// get Gid at destructable layer
 			int GID_des = destructable->getTileGIDAt(Vec2(bomb_tile_coord.x - l_range - 1, bomb_tile_coord.y));
+			// if the brick is destructable
 			if (GID_des - firstGid_of_des >= 0) {
+				// remove (destruct) the brick
 				bricks->removeTileAt(Vec2(bomb_tile_coord.x - l_range - 1, bomb_tile_coord.y));
 				if (bomb_tile_coord.y > 0) {
+					// reomve the top of the brick
 					map->getLayer("tops")->removeTileAt(Vec2(bomb_tile_coord.x - l_range - 1, bomb_tile_coord.y - 1));
 				}
+				// remove the destructable property
 				destructable->removeTileAt(Vec2(bomb_tile_coord.x - l_range  - 1, bomb_tile_coord.y));
 			}
 			break;
 		}
 	}
-
+	// the traversing strategy is similar to the above one
 	for (; r_range < power && bomb_tile_coord.x + r_range + 1 < MAP_SIZE.width; r_range++) {
 		int GID_brk = bricks->getTileGIDAt(Vec2(bomb_tile_coord.x + r_range + 1, bomb_tile_coord.y));
 		if (GID_brk - firstGid_of_brk >= 0) {
@@ -320,12 +330,15 @@ void GameScene::bomb_explode(Bomb *bomb)
 	 */
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Explosion.plist");
+	// the center explosion effect
 	Sprite *wave = Sprite::createWithSpriteFrameName("ExplosionCenter_01.png");
 	bomb->addChild(wave);
 	wave->setPosition(Vec2(TILE_SIZE.width/2, TILE_SIZE.height/2));
 
+	// the left explosion effect
 	for (int i = 0; i < l_range; i++) {
 		Sprite *l_wave;
+		// if is the end of the explosion range
 		if (i == l_range - 1) {
 			l_wave = Sprite::createWithSpriteFrameName("ExplosionLEFT_01.png");
 		} else {
@@ -334,6 +347,7 @@ void GameScene::bomb_explode(Bomb *bomb)
 		bomb->addChild(l_wave);
 		l_wave->setPosition(Vec2((-i - 1) * TILE_SIZE.width + TILE_SIZE.width / 2, TILE_SIZE.height / 2));
 	}
+	// the traversing strategy is similar to the above one
 	for (int i = 0; i < r_range; i++) {
 		Sprite *r_wave;
 		if (i == r_range - 1) {
@@ -382,6 +396,8 @@ bool GameScene::here_can_set(Vec2 pos)
 {
 	pos = Vec2(pos.x, pos.y - hero->getContentSize().height / 3);
 	Vec2 tile_coord = tileCoordFromPosition(pos);
+
+	// traverse to get all bomb currently
 	for (Bomb *bomb : current_bombs) {
 		Vec2 bomb_tile_coord = tileCoordFromPosition(bomb->getPosition());
 		if (bomb_tile_coord == tile_coord) {
@@ -430,6 +446,7 @@ bool GameScene::makeMove(Vec2 position, Player * player)
 	// correct the detection deviation caused by the sprite size
 	Size figSize = player->getContentSize();
 	
+	// check the top and the down side of the player respectively
 	Vec2 targetPos_down(position.x,  position.y - figSize.height / 2);
 	Vec2 targetPos_top = position;
 
@@ -445,15 +462,15 @@ bool GameScene::makeMove(Vec2 position, Player * player)
 	}
 	// if the target position is out of bound
 	if (isOutOfMap(targetPos_down) || isOutOfMap(targetPos_top)) return false;
-
+	// if the target does not collide
 	if (collideWithBrick(targetPos_down) || collideWithBrick(targetPos_top)) return false;
-
 	if (collideWithBubble(player->getPosition(), targetPos_top)) return false;
 
 	player->setPosition(position);
     return true;
 }
 
+// This method convert the position into the tile coordinate.
 Vec2 GameScene::tileCoordFromPosition(Vec2 position)
 {
 	int x = position.x / map->getTileSize().width;
