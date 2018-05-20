@@ -12,7 +12,7 @@
 USING_NS_CC;
 
 /* Following are the attributes of Item Controller   */
-const int NUM_ITEMS = 5;
+const int NUM_ITEMS = 10;
 
 class ItemController : public Node {
 public:
@@ -23,6 +23,12 @@ public:
     /* Override update method   */
     virtual void update(float delta);
 
+	/* Method: create_item
+	* ----------------------
+	* Create an item
+	*/
+	void create_item();
+
     /* Method: bind_player
      * ----------------------
      * Bind the player to item controller, which
@@ -30,6 +36,12 @@ public:
      * this player.
      */
     void bind_player(Player * player);
+
+	void bind_bricks_layer(TMXLayer * bricks);
+
+	void bind_destructable_layer(TMXLayer * destructable);
+
+	bool cannot_be_placed(Vec2 pos);
 
     /* Method: is_picked
      * Usage: if (is_picked(item)) do ...
@@ -42,16 +54,13 @@ public:
     bool is_picked(Item * item);
 
 private:
-    /* Method: create_item
-     * ----------------------
-     * Create an item
-     */
-    void create_item();
 
     /* Store all the Items   */
     Vector<Item*> current_item_vector;
 
     Player * monitored_player = NULL;
+	TMXLayer * _bricks = NULL;
+	TMXLayer * _destructable = NULL;
 };
 
 #endif //BOMBING_ADVENTURE_ITEMCONTROLLER_H

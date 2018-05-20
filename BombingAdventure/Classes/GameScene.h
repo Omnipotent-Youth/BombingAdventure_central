@@ -41,7 +41,7 @@ public:
 
 	bool makeMove(cocos2d::Vec2 position, Player * player);
 
-	void game_over();
+	virtual void game_over();
 
 
 	/* macro for creating layer */
