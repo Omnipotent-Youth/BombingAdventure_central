@@ -29,7 +29,7 @@ bool GameOverScene::init()
 	return true;
 }
 
-void GameOverScene::menuCallBack(cocos2d::Ref * pSender)
+void GameOverScene::menuCallBack(Ref * pSender)
 {
 	Director::getInstance()->replaceScene(CCTransitionFade::create(0.6f, HelloWorld::createScene()));
 }

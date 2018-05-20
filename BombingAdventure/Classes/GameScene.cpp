@@ -72,7 +72,27 @@ bool GameScene::init() {
     hero = Player::create();
 	hero->setPosition(Vec2(x+20, y+70));
     this->addChild(hero, 100, 200);
+	
+	/* create the health point bar for player*/
+	HP = ui::LoadingBar::create("hp.png");
+	HP->setPosition(Vec2(HP->getContentSize().width / 2, visibleSize.height - HP->getContentSize().height / 2));
+	HP->setPercent(100);
+	addChild(HP, 101);
+	HP->setGlobalZOrder(101);
 
+	MenuItemImage * win_scene = MenuItemImage::create(
+		"win.png",
+		"win.png",
+		CC_CALLBACK_1(GameScene::menuCallBack, this));
+
+	win_scene->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	win_scene->setScale(0.6);
+
+	auto menu = Menu::create(win_scene, NULL);
+	menu->setPosition(Vec2::ZERO);
+	addChild(menu, 1, "menu");
+	menu->setGlobalZOrder(200);
+	menu->setVisible(false);
 
     /* Following are keyboard listener  */
 
@@ -167,10 +187,16 @@ bool GameScene::init() {
 
 void GameScene::update(float delta) {
 
-	if (!hero->is_alive() || monster_controller->current_monster_vector.empty()) {
+	if (!hero->is_alive()) {
 		game_over();
 	}
+
+	if (monster_controller->current_monster_vector.empty()) {
+		this->getChildByName("menu")->setVisible(true);
+	}
 	
+	HP->setPercent(100 * hero->get_HP() / PLAYER_MAX_HP);
+
 	/* Following part updates the movement of player    */
 	float position_x = hero->getPositionX();
 	float position_y = hero->getPositionY();
@@ -431,6 +457,11 @@ Vec2 GameScene::tileCoordFromPosition(Vec2 position)
 
 void GameScene::game_over()
 {
-	Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.8f, GameOverScene::createScene()));
+	Director::getInstance()->replaceScene(CCTransitionFade::create(0.6f, GameOverScene::createScene()));
+}
+
+void GameScene::menuCallBack(Ref *pSender)
+{
+	Director::getInstance()->replaceScene(CCTransitionFade::create(0.6f, HelloWorld::createScene()));
 }
 
