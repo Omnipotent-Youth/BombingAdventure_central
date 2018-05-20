@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="24" height="16" tilewidth="40" tileheight="40" infinite="0" nextlayerid="21" nextobjectid="2">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="24" height="16" tilewidth="40" tileheight="40" infinite="0" nextlayerid="22" nextobjectid="2">
  <tileset firstgid="1" name="Background" tilewidth="40" tileheight="40" tilecount="7" columns="7">
   <image source="mapItems/background.png" width="280" height="40"/>
  </tileset>
@@ -8,6 +8,7 @@
  </tileset>
  <tileset firstgid="24" source="mapItems/collide.tsx"/>
  <tileset firstgid="24" source="mapItems/destructable.tsx"/>
+ <tileset firstgid="25" source="mapItems/non-destroy.tsx"/>
  <layer id="14" name="background" width="24" height="16">
   <data encoding="base64" compression="zlib">
    eJxjZGBgYIRiZiBmg9KMJGJ0vUxQjE/NUDOfhUp4uIbPqPmj5lNi/lDJX0zDyHwAIFsDDA==

@@ -17,9 +17,9 @@ Player::Player() {
     /* Default view of a new player         */
 //            std::string player_file_name = "player1_default.png";
 //            bind_sprite(Sprite::create(player_file_name));
-        bind_sprite(Sprite::create("player1_default.png"));
-            this->setAnchorPoint(Vec2(0.5,0.5));
-			this->_contentSize = getContentSize();
+    bind_sprite(Sprite::create("player1_default.png"));
+	this->setAnchorPoint(Vec2(0.5, 0.5));
+	this->_contentSize = getContentSize();
 }
 
 Player::~Player() {

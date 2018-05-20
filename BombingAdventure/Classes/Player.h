@@ -12,7 +12,7 @@
 
 USING_NS_CC;
 
-const int MAX_POWER = 5;
+const int MAX_POWER = 6;
 const int PLAYER_DEFAULT_HP = 3;
 const int PLAYER_DEFAULT_AVAILABLE_BOMBS = 3;
 const float PLAYER_DEFAULT_MOVING_SPEED = 3.0f;
@@ -119,6 +119,7 @@ protected:
     int num_present_bombs;
 
 private:
+
 //    int cool_down_time;
 //    void set_HP(int new_HP);
 //    void set_moving_speed(float new_speed);

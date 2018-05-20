@@ -31,19 +31,26 @@ public:
     /* Override update method   */
     virtual void update(float delta);
 
+	/* Method: create_monster
+	* ----------------------
+	* Create a monster
+	*/
+	void create_monster();
+
     /* */
     void bind_player(Player * player);
 
+	void bind_layer(TMXLayer* layer);
+
+	bool is_in_brick(Vec2 pos);
+
     /* Store all the Monsters   */
     Vector<Monster*> current_monster_vector;
+
 private:
-    /* Method: create_monster
-     * ----------------------
-     * Create a monster
-     */
-    void create_monster();
 
     Player * monitored_player = NULL;
+	TMXLayer * _bricks = NULL;
 };
 
 #endif //BOMBING_ADVENTURE_MONSTERCONTROLLER_H

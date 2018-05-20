@@ -3,19 +3,20 @@
 //
 
 #include "MonsterController.h"
+#include "GameScene.h"
 
 bool MonsterController::init() {
     /* Get current time to initialize a random seed     */
-//    timeval now;
-//    gettimeofday(&now, NULL);
-//    auto seed = (unsigned) (now.tv_sec * 1000 + now.tv_usec / 1000);
-//    srand(seed);
+    timeval now;
+    gettimeofday(&now, NULL);
+    auto seed = (unsigned) (now.tv_sec * 1000 + now.tv_usec / 1000);
+    srand(seed);
 
-    create_monster();
     /* Enable update    */
     this->scheduleUpdate();
     return true;
 }
+
 void MonsterController::update(float delta) {
 	int count = 0;
 	for (auto iter = current_monster_vector.begin(); iter != current_monster_vector.end(); ) {
@@ -49,13 +50,32 @@ void MonsterController::create_monster() {
 
         /* Create NUM_MONSTERS monsters */
         Monster * monster = Monster::create();
-        monster->reset_position();
-
+		
+		monster->reset_position();
+		while (is_in_brick(monster->getPosition())) {
+			monster->reset_position();
+		}
         /* Make the monster under the control of MonsterController  */
         this->addChild(monster);
         current_monster_vector.pushBack(monster);
     }
 }
+
 void MonsterController::bind_player(Player * player) {
     monitored_player = player;
+}
+
+void MonsterController::bind_layer(TMXLayer* layer)
+{
+	_bricks = layer;
+}
+
+bool MonsterController::is_in_brick(Vec2 pos)
+{
+	int firstGID = _bricks->getTileSet()->_firstGid;
+
+	Vec2 tile_coord = Vec2(pos.x / TILE_SIZE.width, (MAP_SIZE.height * TILE_SIZE.height - pos.y) / TILE_SIZE.height);
+	int GID = _bricks->getTileGIDAt(tile_coord);
+
+	return (GID - firstGID >= 0);
 }

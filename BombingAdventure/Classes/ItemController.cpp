@@ -2,6 +2,7 @@
 // Created by Brando Zhang on 2018/5/19.
 //
 
+#include "GameScene.h"
 #include "ItemController.h"
 
 bool ItemController::init() {
@@ -11,7 +12,6 @@ bool ItemController::init() {
     auto seed = (unsigned) (now.tv_sec * 1000 + now.tv_usec / 1000);
     srand(seed);
 
-    create_item();
     /* Enable update    */
     this->scheduleUpdate();
     return true;
@@ -39,6 +39,9 @@ void ItemController::create_item() {
         /* Create NUM_ITEMS items */
         Item * item = Item::create();
         item->reset_position();
+		while (cannot_be_placed(item->getPosition())) {
+			item->reset_position();
+		}
 
         /* Make the item under the control of ItemController  */
         this->addChild(item);
@@ -48,6 +51,28 @@ void ItemController::create_item() {
 
 void ItemController::bind_player(Player *player) {
     monitored_player = player;
+}
+
+void ItemController::bind_bricks_layer(TMXLayer * bricks)
+{
+	_bricks = bricks;
+}
+
+void ItemController::bind_destructable_layer(TMXLayer * destructable)
+{
+	_destructable = destructable;
+}
+
+bool ItemController::cannot_be_placed(Vec2 pos)
+{
+	int firstGID_brk = _bricks->getTileSet()->_firstGid;
+	int firstGID_des = _destructable->getTileSet()->_firstGid;
+
+	Vec2 tile_coord = Vec2(pos.x / TILE_SIZE.width, (MAP_SIZE.height * TILE_SIZE.height - pos.y) / TILE_SIZE.height);
+	int GID_brk = _bricks->getTileGIDAt(tile_coord);
+	int GID_des = _destructable->getTileGIDAt(tile_coord);
+
+	return (GID_brk - firstGID_brk >= 0 && GID_des - firstGID_des < 0);
 }
 
 bool ItemController::is_picked(Item *item) {
