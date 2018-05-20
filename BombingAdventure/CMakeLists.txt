@@ -167,7 +167,7 @@ set(GAME_SRC
         Classes/Item.cpp
         Classes/Bomb.cpp
         Classes/ItemController.cpp
-        )
+        Classes/RulesScene2.cpp)
 
 
 set(GAME_HEADERS
@@ -183,7 +183,7 @@ set(GAME_HEADERS
         Classes/Item.h
         Classes/Bomb.h
         Classes/ItemController.h
-        )
+        Classes/RulesScene2.h)
 
 # add the executable
 if(ANDROID)
