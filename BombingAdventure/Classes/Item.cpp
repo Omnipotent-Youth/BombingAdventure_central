@@ -9,11 +9,10 @@ Item::Item() {
     /* Default attributes of a new item     */
     is_picked = false;
     item_id = (int) floor(CCRANDOM_0_1() * sizeof(items));
-    item_id = 1;
-    /* Default view of a new item         */
-    bind_sprite(Sprite::create("Item_1.png"));
+    /* Default view of a new item           */
+	__String *itemName = __String::createWithFormat("Item_%d.png", item_id);
+    bind_sprite(Sprite::create(itemName->getCString()));
     this->setAnchorPoint(Vec2(0.5,0.5));
-    this->setGlobalZOrder(0);
 }
 Item::~Item() {
     /* Not yet  */

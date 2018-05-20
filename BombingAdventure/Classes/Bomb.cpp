@@ -7,7 +7,6 @@
 USING_NS_CC;
 
 bool Bomb::init() {
-    power = 1;
     isCounting = false;
 
 	Animation *animation = Animation::create();
@@ -57,12 +56,8 @@ void Bomb::startCounting(float time) {
 	exploded = false;
 }
 
-int Bomb::getPower()
-{
-	return power;
-}
-
 bool Bomb::bombIsExploded()
 {
 	return exploded;
 }
+

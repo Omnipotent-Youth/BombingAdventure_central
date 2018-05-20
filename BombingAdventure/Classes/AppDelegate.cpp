@@ -89,6 +89,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// background music preloaded
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("music&effect/HelloMusic.mp3");
 
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("music&effect/BubbleSet.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("music&effect/BubbleBoom.mp3");
+
 	return true;
 }
 

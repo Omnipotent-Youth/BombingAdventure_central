@@ -6,10 +6,10 @@
 
 bool ItemController::init() {
     /* Get current time to initialize a random seed     */
-//    timeval now;
-//    gettimeofday(&now, NULL);
-//    auto seed = (unsigned) (now.tv_sec * 1000 + now.tv_usec / 1000);
-//    srand(seed);
+    timeval now;
+    gettimeofday(&now, NULL);
+    auto seed = (unsigned) (now.tv_sec * 1000 + now.tv_usec / 1000);
+    srand(seed);
 
     create_item();
     /* Enable update    */
@@ -17,15 +17,20 @@ bool ItemController::init() {
     return true;
 }
 void ItemController::update(float delta) {
-    for (Item * item : current_item_vector) {
+
+	int i = 0;
+	for (auto iter = current_item_vector.begin(); iter != current_item_vector.end();) {
         /* Check whether this item is picked by the monitored player    */
-        if (is_picked(item)) {
-            monitored_player->pick_item(*item);
-            item->removeAllChildren();
-            item->removeFromParent();
-            current_item_vector.eraseObject(item);
-            log("Item is removed.");
-        }
+        if (is_picked(*iter)) {
+            monitored_player->pick_item(*iter);
+            current_item_vector.at(i)->removeAllChildren();
+			current_item_vector.at(i)->removeFromParent();
+            iter = current_item_vector.erase(i);
+			log("Item is removed.");
+		} else {
+			iter++;
+		}
+		i++;
     }
 }
 void ItemController::create_item() {
@@ -40,9 +45,11 @@ void ItemController::create_item() {
         current_item_vector.pushBack(item);
     }
 }
+
 void ItemController::bind_player(Player *player) {
     monitored_player = player;
 }
+
 bool ItemController::is_picked(Item *item) {
     /* Get the bounding box of the player   */
     Rect player_bounding_box = monitored_player->getBoundingBox();
