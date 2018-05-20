@@ -189,10 +189,14 @@ void GameScene::update(float delta) {
 
 	if (!hero->is_alive()) {
 		game_over();
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music&effect/game_over.mp3");
 	}
 
 	if (monster_controller->current_monster_vector.empty()) {
 		this->getChildByName("menu")->setVisible(true);
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music&effect/win_game.mp3");
 	}
 	
 	HP->setPercent(100 * hero->get_HP() / PLAYER_MAX_HP);
@@ -305,9 +309,11 @@ void GameScene::bomb_explode(Bomb *bomb)
 	}
 
 	hero->bomb_vs_man(bomb_tile_coord, l_range, r_range, u_range, d_range);
+
     for (Monster * monster : monster_controller->current_monster_vector) {
         monster->bomb_vs_man(bomb_tile_coord, l_range, r_range, u_range, d_range);
     }
+
 	/* Now we have l_range, r_value, u_value, d_value, which indicate the explosion
 	 * range of the bomb in the four directions. What you need to do now is to 
 	 * display the animation effect of bombs.
