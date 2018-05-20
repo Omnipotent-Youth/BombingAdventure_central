@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "MonsterController.h"
 #include "ItemController.h"
-#include "ui\UILoadingBar.h"
+#include "ui/UILoadingBar.h"
 
 const cocos2d::Size TILE_SIZE(40, 40);
 const cocos2d::Size MAP_SIZE(24, 16);

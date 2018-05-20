@@ -57,13 +57,25 @@ public:
 
     void startCounting(float time);
 
+	/*
+	 * method: bombIsExploded()
+	 * ------------------------
+	 * Returns bool member exploded of the bomb, which 
+	 * indicates whether it has been blown up.
+	 */
+
 	bool bombIsExploded();
 
 private:
     float currentTime;      /* Current Time of timing               */
     float endTime;          /* The End Time set for explosion       */
-    bool isCounting;        /* Whether counting is being processed. */
-	bool exploded;
+    
+	/* isCounting and exploded have some differences: when the bomb is going 
+	   to explode, exploded set true, and continue timing; then, the GameScene
+	   will show the explosion effect; finally, isCounting set false, and all 
+	   children of the bombs will be removed.						*/ 
+	bool isCounting;        /* Whether counting is being processed. */
+	bool exploded;			/* Whether bomb has exploded			*/
 };
 
 

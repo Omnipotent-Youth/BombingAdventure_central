@@ -6,10 +6,13 @@
 class GameOverScene : public cocos2d::Scene
 {
 public:
+	/* create game over scene */
 	static cocos2d::Scene* createScene();
 
+	/* initializer */
 	virtual bool init();
 
+	/* menu call back function */
 	virtual void menuCallBack(cocos2d::Ref* pSender);
 
 	CREATE_FUNC(GameOverScene);

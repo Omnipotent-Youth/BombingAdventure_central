@@ -17,11 +17,6 @@ const int NUM_MONSTERS = 5;
 
 class MonsterController : public Node {
 public:
-//    /*  Constructor */
-//    MonsterController();
-//
-//    /*  Destructor   */
-//    ~MonsterController();
 
     CREATE_FUNC(MonsterController);
 
