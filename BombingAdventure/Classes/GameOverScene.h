@@ -15,5 +15,4 @@ public:
 	CREATE_FUNC(GameOverScene);
 };
 
-
 #endif //_GAME_OVER_SCENE_H_
