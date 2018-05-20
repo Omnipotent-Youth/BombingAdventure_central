@@ -9,7 +9,8 @@ USING_NS_CC;
 
 Player::Player() {
     /* Default attributes of a new player   */
-    HP = PLAYER_DEFAULT_HP;
+	power = 1;
+	HP = PLAYER_DEFAULT_HP;
     moving_speed = PLAYER_DEFAULT_MOVING_SPEED;
     num_max_available_bombs = PLAYER_DEFAULT_AVAILABLE_BOMBS;
     num_present_bombs = 0;
@@ -66,7 +67,7 @@ int Player::get_num_available_bombs() {
 Bomb* Player::set_bomb() {
     if (get_sprite() == NULL) return NULL;
     Bomb * bomb = Bomb::create();
-	
+
 	Vec2 player_tile_coord = tileCoordFromPosition(Vec2(this->getPosition().x, this->getPosition().y - this->getContentSize().height / 3));
 
 	bomb->setPosition(Vec2(player_tile_coord.x*TILE_SIZE.width + TILE_SIZE.width / 2,
@@ -84,12 +85,14 @@ Bomb* Player::set_bomb() {
 	return bomb;
 }
 
-void Player::pick_item(Item & item) {
+void Player::pick_item(Item *item) {
     if (get_sprite() == NULL) return;   /* Avoid strange things happened :) */
-    int item_id = item.get_item_id();
+    int item_id = item->get_item_id();
     switch (item_id) {
         case Item::POWER_UP:
-            /* Not yet  */
+			if (power < MAX_POWER) {
+				power++;
+			}
             break;
         case Item::SPEED_UP:
             if (moving_speed < PLAYER_MAX_MOVING_SPEED) {
@@ -107,7 +110,7 @@ void Player::pick_item(Item & item) {
     }
     log("Pick item.");
     log("Now my speed is %f", moving_speed);
-    item.is_picked = true;
+    item->is_picked = true;
 }
 
 void Player::bomb_vs_man(Vec2 bomb_tile_coord, int l, int r, int u, int d)
@@ -132,4 +135,9 @@ void Player::injured(int deduct_HP) {
             HP = 0;
         }
     }
+}
+
+int Player::getPower()
+{
+	return power;
 }

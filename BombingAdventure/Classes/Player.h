@@ -12,7 +12,7 @@
 
 USING_NS_CC;
 
-
+const int MAX_POWER = 5;
 const int PLAYER_DEFAULT_HP = 3;
 const int PLAYER_DEFAULT_AVAILABLE_BOMBS = 3;
 const float PLAYER_DEFAULT_MOVING_SPEED = 3.0f;
@@ -46,7 +46,7 @@ public:
      * -------------------------------
      * Pick the item which can change the behavior of the player.
      */
-    void pick_item(Item & item);
+    void pick_item(Item * item);
 
 	void bomb_vs_man(Vec2 bomb_tile_coord, int l, int r, int u, int d);
 
@@ -56,6 +56,8 @@ public:
      * Deducts the HP of the player by deduct_HP.
      */
     void injured(int deduct_HP = 1);
+
+	int getPower();
 
 //  View
 
@@ -110,6 +112,7 @@ protected:
     /*    Instance variables    */
 
     //  Models
+	int power;
     int HP;
     float moving_speed;
     int num_max_available_bombs;
