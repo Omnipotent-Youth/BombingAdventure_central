@@ -3,10 +3,9 @@
 
 #include "cocos2d.h"
 #include "Player.h"
-#include "Monster.h"
-#include "Item.h"
 #include "MonsterController.h"
 #include "ItemController.h"
+#include "ui\UILoadingBar.h"
 
 const cocos2d::Size TILE_SIZE(40, 40);
 const cocos2d::Size MAP_SIZE(24, 16);
@@ -41,8 +40,9 @@ public:
 
 	bool makeMove(cocos2d::Vec2 position, Player * player);
 
-	virtual void game_over();
+	void game_over();
 
+	virtual void menuCallBack(cocos2d::Ref *pSender);
 
 	/* macro for creating layer */
 	CREATE_FUNC(GameScene);
@@ -102,9 +102,11 @@ private:
 
 	/* Test class Player part   */
     Player * hero = NULL;      /* This is the player control by human  */
+
+	ui::LoadingBar *HP = NULL;		   /* health point bar					   */
 //    Map<Vec2, STATUS_AT*> status_map;
-        MonsterController * monster_controller = NULL;
-        ItemController * item_controller = NULL;
+	MonsterController * monster_controller = NULL;
+	ItemController * item_controller = NULL;
 
 };
 

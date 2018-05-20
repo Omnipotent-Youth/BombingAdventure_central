@@ -13,10 +13,7 @@ Player::Player() {
 	HP = PLAYER_DEFAULT_HP;
     moving_speed = PLAYER_DEFAULT_MOVING_SPEED;
     num_max_available_bombs = PLAYER_DEFAULT_AVAILABLE_BOMBS;
-    num_present_bombs = 0;
     /* Default view of a new player         */
-//            std::string player_file_name = "player1_default.png";
-//            bind_sprite(Sprite::create(player_file_name));
     bind_sprite(Sprite::create("player1_default.png"));
 	this->setAnchorPoint(Vec2(0.5, 0.5));
 	this->_contentSize = getContentSize();
@@ -32,7 +29,7 @@ bool Player::init() {
 
 bool Player::can_set_bomb() {
     if (get_sprite() != NULL) {
-        return num_present_bombs < num_max_available_bombs;
+         return num_present_bombs < num_max_available_bombs;
     }
     return false;
 }
@@ -61,7 +58,7 @@ int Player::get_HP() {
 
 int Player::get_num_available_bombs() {
     if (get_sprite() == NULL) return -1;
-    return num_max_available_bombs - num_present_bombs;
+    return (num_max_available_bombs - num_present_bombs);
 }
 
 Bomb* Player::set_bomb() {
@@ -79,8 +76,6 @@ Bomb* Player::set_bomb() {
     ++(this->num_present_bombs);
 
     bomb->startCounting(2.5f);
-
-	--(this->num_present_bombs);
 	
 	return bomb;
 }
@@ -115,6 +110,8 @@ void Player::pick_item(Item *item) {
 
 void Player::bomb_vs_man(Vec2 bomb_tile_coord, int l, int r, int u, int d)
 {
+	--(this->num_present_bombs);
+	
 	Vec2 player_tile_coord = tileCoordFromPosition(this->getPosition());
 	for (int i = bomb_tile_coord.x - l; i <= bomb_tile_coord.x + r; i++) {
 		if (player_tile_coord == Vec2(i, bomb_tile_coord.y)) {
