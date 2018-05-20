@@ -17,28 +17,33 @@ bool MonsterController::init() {
     return true;
 }
 void MonsterController::update(float delta) {
-    for (Monster* monster: current_monster_vector) {
-        if (monster->is_alive()) {
-
+	int count = 0;
+	for (auto iter = current_monster_vector.begin(); iter != current_monster_vector.end(); ) {
+		Monster *monster = current_monster_vector.at(count);
+		if (monster->is_alive()) {
             Vec2 monster_pos_in_pixel = monster->getPosition();
             Vec2 monster_pos_in_tile = monster->tileCoordFromPosition(monster_pos_in_pixel);
-        if (monster_pos_in_tile.x < 0 || monster_pos_in_tile.x > 40
+			if (monster_pos_in_tile.x < 0 || monster_pos_in_tile.x > 40
                 || monster_pos_in_tile.y < 0 || monster_pos_in_tile.y > 40) {
-            monster->reset_position();
-        }
+				monster->reset_position();
+			}
 
-        if (monster->collided_with(monitored_player)) {
-            monitored_player->injured();
-            log("The HP of the player is %d", monitored_player->get_HP());
-        }
-        } else {
-            monster->removeAllChildren();
-            monster->removeFromParent();
-            current_monster_vector.eraseObject(monster);
-            log("Monster is removed.");
-        }
+			if (monster->collided_with(monitored_player)) {
+				monitored_player->injured();
+				log("The HP of the player is %d", monitored_player->get_HP());
+			}
+			iter++;
+			count++;
+		}
+		else {
+			monster->removeAllChildren();
+			monster->removeFromParent();
+			iter = current_monster_vector.erase(iter);
+			log("Monster is removed.");
+		}
     }
 }
+
 void MonsterController::create_monster() {
     for (int i = 0; i < NUM_MONSTERS; i++) {
 
