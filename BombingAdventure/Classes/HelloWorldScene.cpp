@@ -39,8 +39,8 @@ bool HelloWorld::init()
 	this->addChild(bg);
 
 	auto closeItem = MenuItemImage::create(
-		"_CloseSelected.png",
-		"_CloseSelected.png",
+		"quit.png",
+		"quit.png",
 		CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
 	auto startItem = MenuItemImage::create(
@@ -61,10 +61,10 @@ bool HelloWorld::init()
     }
     else
     {
-        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/10;
-        float y = origin.y + closeItem->getContentSize().height/10;
+        float x = origin.x + visibleSize.width - closeItem->getContentSize().width / 2;
+        float y = origin.y + closeItem->getContentSize().height / 2;
         closeItem->setPosition(Vec2(x,y));
-  		closeItem->setScale(0.1);
+  		closeItem->setScale(0.5);
     }
 
 	startItem->setAnchorPoint(Vec2(0.5, 0.5));
