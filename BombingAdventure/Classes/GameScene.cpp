@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "HelloWorldScene.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -106,8 +107,9 @@ bool GameScene::init() {
                 hero->y_movement = MOVE_SIGNAL_Y::MOVE_DOWN;
                 break;
             case EventKeyboard::KeyCode::KEY_SPACE:
-                if (here_can_set(hero->getPosition()) && hero->can_set_bomb()) {
-                    Bomb *bomb = hero->set_bomb();
+				if (here_can_set(hero->getPosition()) && hero->can_set_bomb()) {
+					CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music&effect/bubbleSet.mp3");
+					Bomb *bomb = hero->set_bomb();
 					current_bombs.pushBack(bomb);
 				}
                 break;
@@ -148,10 +150,9 @@ bool GameScene::init() {
     /* Initialize an ItemController     */
     ItemController * item_controller = ItemController::create();
     item_controller->bind_player(hero);
-    this->addChild(item_controller);
+	this->addChild(item_controller);
 
     /* If uncomment the following statement, items will be hid under the bricks    */
-//    item_controller->setGlobalZOrder(0);
     monster_controller->setGlobalZOrder(99);
 	return true;
 }
@@ -159,9 +160,9 @@ bool GameScene::init() {
 
 void GameScene::update(float delta) {
 
-	if (!hero->is_alive()) {
-		game_over();
-	}
+//	if (!hero->is_alive()) {
+//		game_over();
+//	}
 	
 	/* Following part updates the movement of player    */
 	float position_x = hero->getPositionX();
@@ -178,13 +179,14 @@ void GameScene::update(float delta) {
 	while (!current_bombs.empty() && current_bombs.front()->bombIsExploded()) {
 		Bomb * bomb = current_bombs.front();
 		bomb_explode(bomb);
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music&effect/bubbleBoom.mp3");
 		current_bombs.erase(0);
 	}
 }
 
 void GameScene::bomb_explode(Bomb *bomb)
 {
-	int power = bomb->getPower();
+	int power = hero->getPower();
 	int l_range = 0;
 	int r_range = 0;
 	int u_range = 0;
@@ -267,7 +269,7 @@ void GameScene::bomb_explode(Bomb *bomb)
 
 	for (int i = 0; i < l_range; i++) {
 		Sprite *l_wave;
-		if (i = l_range - 1) {
+		if (i == l_range - 1) {
 			l_wave = Sprite::createWithSpriteFrameName("ExplosionLEFT_01.png");
 		} else {
 			l_wave = Sprite::createWithSpriteFrameName("ExplosionLEFT_02.png");
@@ -277,7 +279,7 @@ void GameScene::bomb_explode(Bomb *bomb)
 	}
 	for (int i = 0; i < r_range; i++) {
 		Sprite *r_wave;
-		if (i = r_range - 1) {
+		if (i == r_range - 1) {
 			r_wave = Sprite::createWithSpriteFrameName("ExplosionRIGHT_01.png");
 		} else {
 			r_wave = Sprite::createWithSpriteFrameName("ExplosionRIGHT_02.png");
@@ -287,7 +289,7 @@ void GameScene::bomb_explode(Bomb *bomb)
 	}
 	for (int i = 0; i < d_range; i++) {
 		Sprite *d_wave;
-		if (i = d_range - 1) {
+		if (i == d_range - 1) {
 			d_wave = Sprite::createWithSpriteFrameName("ExplosionDOWN_01.png");
 		} else {
 			d_wave = Sprite::createWithSpriteFrameName("ExplosionDOWN_02.png");
@@ -297,7 +299,7 @@ void GameScene::bomb_explode(Bomb *bomb)
 	}
 	for (int i = 0; i < u_range; i++) {
 		Sprite *u_wave;
-		if (i = u_range - 1) {
+		if (i == u_range - 1) {
 			u_wave = Sprite::createWithSpriteFrameName("ExplosionUP_01.png");
 		} else {
 			u_wave = Sprite::createWithSpriteFrameName("ExplosionUP_02.png");
@@ -321,9 +323,11 @@ bool GameScene::isOutOfMap(Vec2 pos)
 
 bool GameScene::here_can_set(Vec2 pos)
 {
+	pos = Vec2(pos.x, pos.y - hero->getContentSize().height / 3);
 	Vec2 tile_coord = tileCoordFromPosition(pos);
 	for (Bomb *bomb : current_bombs) {
-		if (tileCoordFromPosition(bomb->getPosition()) == tile_coord) {
+		Vec2 bomb_tile_coord = tileCoordFromPosition(bomb->getPosition());
+		if (bomb_tile_coord == tile_coord) {
 			return false;
 		}
 	}

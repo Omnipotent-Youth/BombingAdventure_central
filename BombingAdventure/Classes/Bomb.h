@@ -57,15 +57,9 @@ public:
 
     void startCounting(float time);
 
-	int getPower();
-
 	bool bombIsExploded();
 
-
-
 private:
-
-    int power;              /* The power of the bomb                */
     float currentTime;      /* Current Time of timing               */
     float endTime;          /* The End Time set for explosion       */
     bool isCounting;        /* Whether counting is being processed. */
