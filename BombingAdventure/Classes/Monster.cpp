@@ -48,7 +48,6 @@ void Monster::make_new_direction() {
 		break;
 	}
 }
-
 bool Monster::collided_with(Player * player) {
     /* Get the bounding box of the player   */
     Rect player_bounding_box = player->getBoundingBox();
