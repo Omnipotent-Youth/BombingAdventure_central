@@ -8,9 +8,10 @@ class HelloWorld : public cocos2d::Scene
 public:
     static cocos2d::Scene* createScene();
 
+	// initializer
     virtual bool init();
     
-    // a selector callback
+    // selector callback functions
     void menuCloseCallback(cocos2d::Ref* pSender);
 	void menuStartScene(cocos2d::Ref* pSender);
 	void menuRulesScene(cocos2d::Ref* pSender);

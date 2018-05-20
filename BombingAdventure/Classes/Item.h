@@ -30,6 +30,7 @@ public:
 
     int get_item_id();
 
+	/* four types of items      */
     enum items {POWER_UP, SPEED_UP, HP_UP, NUM_BOMBS_UP};
 
     /* Mark whether this item is picked */

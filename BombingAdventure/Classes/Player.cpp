@@ -4,6 +4,7 @@
 
 #include "GameScene.h"
 #include "Player.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -129,6 +130,7 @@ void Player::injured(int deduct_HP) {
             HP = 0;
         }
     }
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("music&effect/hero_injured.mp3");
 }
 
 int Player::getPower()
